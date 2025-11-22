@@ -219,53 +219,87 @@ export default function ResearchHero() {
             </div>
           </div>
 
-          {/* Right Column - Quick Start */}
+          {/* Right Column - Research Paper Preview */}
           <div className="lg:sticky lg:top-32">
-            <div className="border-2 border-black bg-black text-white p-8">
-              <div className="flex items-center justify-between mb-8">
-                <h3 className="font-mono text-sm font-bold uppercase tracking-wider">
-                  Quick Start
+            <div className="border-2 border-black bg-white p-8 space-y-6">
+              {/* Header */}
+              <div className="flex items-center justify-between border-b-2 border-black pb-4">
+                <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-black">
+                  Recent Discovery
                 </h3>
-                <div className="w-4 h-4 border-2 border-white bg-white" />
+                <div className="w-4 h-4 border-2 border-black bg-black" />
               </div>
-              
+
+              {/* Paper Preview */}
               <div className="space-y-4">
-                {[
-                  { label: "New Research", icon: "→" },
-                  { label: "Browse Library", icon: "→" },
-                  { label: "View Analytics", icon: "→" },
-                  { label: "Start Investigation", icon: "→" },
-                ].map((action, idx) => (
-                  <motion.button
-                    key={idx}
-                    className="w-full border-2 border-white bg-black text-white font-mono text-sm font-bold uppercase tracking-wider py-4 px-6 hover:bg-white hover:text-black transition-all duration-200 text-left flex items-center justify-between group"
-                    whileHover={{ x: 4 }}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.1 }}
-                  >
-                    <span>{action.label}</span>
-                    <motion.span
-                      className="text-lg"
-                      animate={{ x: [0, 4, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity, delay: idx * 0.2 }}
+                <div>
+                  <div className="font-serif text-lg font-bold text-black mb-2 leading-tight">
+                    AI-Powered Research Methodology: A Comprehensive Analysis
+                  </div>
+                  <div className="font-mono text-xs text-black/60 mb-3">
+                    Smith, J. et al. • Journal of Research Intelligence • 2025
+                  </div>
+                  <p className="font-mono text-xs text-black/70 leading-relaxed line-clamp-3">
+                    This paper presents a novel approach to academic research using
+                    artificial intelligence and blockchain technology. Our methodology
+                    demonstrates significant improvements in citation accuracy...
+                  </p>
+                </div>
+
+                {/* Citation Preview */}
+                <div className="pt-4 border-t-2 border-black">
+                  <div className="font-mono text-[10px] text-black/60 uppercase tracking-wider mb-2">
+                    Citation (APA)
+                  </div>
+                  <div className="bg-black/5 p-3 border border-black/20">
+                    <p className="font-mono text-[10px] text-black/80 leading-relaxed">
+                      Smith, J., Doe, A., & Johnson, B. (2025). AI-powered research
+                      methodology: A comprehensive analysis.{" "}
+                      <span className="italic">Journal of Research Intelligence</span>,{" "}
+                      <span className="font-bold">1</span>(1), 45-67.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {["AI", "Research", "Blockchain"].map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2 py-1 border border-black bg-white font-mono text-[10px] text-black"
                     >
-                      {action.icon}
-                    </motion.span>
-                  </motion.button>
-                ))}
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Action */}
+              <div className="pt-6 border-t-2 border-black">
+                <button className="w-full border-2 border-black bg-black text-white font-mono text-xs font-bold uppercase tracking-wider py-3 hover:bg-white hover:text-black transition-all duration-200">
+                  View Full Paper →
+                </button>
               </div>
 
               {/* Footer */}
-              <div className="mt-8 pt-6 border-t-2 border-white/20">
-                <div className="flex items-center gap-2">
-                  <div className="flex-1 h-0.5 bg-white/20" />
-                  <span className="font-mono text-[10px] text-white/60 uppercase tracking-[0.3em]">
-                    Get Started
+              <div className="pt-4 border-t-2 border-black">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[10px] text-black/50 uppercase tracking-wider">
+                    From Library
                   </span>
-                  <div className="flex-1 h-0.5 bg-white/20" />
+                  <div className="flex gap-1">
+                    <div className="w-1.5 h-1.5 bg-black" />
+                    <div className="w-1.5 h-1.5 bg-black/40" />
+                    <div className="w-1.5 h-1.5 bg-black/20" />
+                  </div>
                 </div>
               </div>
+            </div>
+
+            {/* Decorative Elements */}
+            <div className="mt-6 flex gap-4">
+              <div className="w-16 h-16 border-2 border-black bg-white rotate-[-4deg]" />
+              <div className="w-16 h-16 border-2 border-black bg-black rotate-[4deg]" />
             </div>
           </div>
         </div>

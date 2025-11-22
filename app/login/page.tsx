@@ -5,78 +5,138 @@ import Link from "next/link";
 
 export default function LoginPage() {
   return (
-    <main className="min-h-screen bg-[#f5f5f3] flex items-center justify-center px-6 py-20">
-      <div className="w-full max-w-md">
-        {/* Logo Section */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <Link href="/" className="inline-block mb-6">
-            <div className="flex items-center gap-4 justify-center">
-              <div className="w-16 h-16 border-[3px] border-black bg-white flex items-center justify-center rotate-[-4deg]">
-                <span className="font-serif text-4xl font-black text-black">DS</span>
+    <main className="min-h-screen bg-[#f5f5f3] flex">
+      {/* Left Side - Branding */}
+      <motion.div
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8 }}
+        className="hidden lg:flex lg:w-1/2 bg-black text-white flex-col justify-between p-12 relative overflow-hidden"
+      >
+        {/* Decorative Elements */}
+        <div className="absolute top-0 right-0 w-64 h-64 border-2 border-white/20 rotate-45 translate-x-32 -translate-y-32" />
+        <div className="absolute bottom-0 left-0 w-32 h-32 border-2 border-white/20 rotate-[-45] -translate-x-16 translate-y-16" />
+
+        {/* Logo */}
+        <div>
+          <Link href="/" className="inline-block mb-8">
+            <div className="flex items-center gap-4">
+              <div className="w-20 h-20 border-4 border-white bg-white flex items-center justify-center">
+                <span className="font-serif text-5xl font-black text-black">DS</span>
               </div>
               <div>
-                <div className="font-serif text-3xl font-black text-black leading-none">
+                <div className="font-serif text-4xl font-black leading-none">
                   DOCSCOUT
                 </div>
-                <div className="font-mono text-[10px] text-black/50 uppercase tracking-[0.3em]">
-                  RESEARCH
+                <div className="font-mono text-xs text-white/60 uppercase tracking-[0.3em]">
+                  RESEARCH PLATFORM
                 </div>
               </div>
             </div>
           </Link>
-          <div className="h-1 w-24 bg-black mx-auto" />
-        </motion.div>
+        </div>
 
-        {/* Login Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="border-2 border-black bg-white p-8"
-        >
-          {/* Header */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-4">
-              <h1 className="font-mono text-2xl font-bold uppercase tracking-wider text-black">
-                Sign In
-              </h1>
-              <div className="w-6 h-6 border-2 border-black bg-black" />
-            </div>
-            <div className="h-1 w-16 bg-black" />
+        {/* Content */}
+        <div className="space-y-8 max-w-md">
+          <div>
+            <div className="h-2 w-24 bg-white mb-6" />
+            <h2 className="font-serif text-5xl font-black leading-tight mb-6">
+              Research
+              <br />
+              Intelligence
+            </h2>
+            <p className="font-mono text-sm text-white/80 leading-relaxed">
+              Connect with your Sui wallet to access advanced research tools,
+              AI-powered analysis, and decentralized storage.
+            </p>
           </div>
 
-          {/* Description */}
-          <p className="font-mono text-sm text-black/70 mb-8 leading-relaxed">
-            Connect your Sui wallet to access the research platform and start
-            your investigation.
-          </p>
+          {/* Stats */}
+          <div className="grid grid-cols-2 gap-4 pt-8 border-t-2 border-white/20">
+            <div>
+              <div className="font-mono text-3xl font-black mb-2">98.7%</div>
+              <div className="font-mono text-xs text-white/60 uppercase tracking-wider">
+                Precision
+              </div>
+            </div>
+            <div>
+              <div className="font-mono text-3xl font-black mb-2">0.34s</div>
+              <div className="font-mono text-xs text-white/60 uppercase tracking-wider">
+                Response
+              </div>
+            </div>
+          </div>
+        </div>
 
-          {/* Sui Wallet Button */}
+        {/* Footer */}
+        <div className="flex items-center gap-4">
+          <div className="w-4 h-4 border-2 border-white bg-white" />
+          <span className="font-mono text-xs text-white/60 uppercase tracking-wider">
+            Secure • Encrypted • Decentralized
+          </span>
+        </div>
+      </motion.div>
+
+      {/* Right Side - Login Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-12">
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="w-full max-w-md"
+        >
+          {/* Mobile Logo */}
+          <div className="lg:hidden mb-12 text-center">
+            <Link href="/" className="inline-block mb-6">
+              <div className="flex items-center gap-3 justify-center">
+                <div className="w-14 h-14 border-3 border-black bg-white flex items-center justify-center">
+                  <span className="font-serif text-3xl font-black text-black">DS</span>
+                </div>
+                <div>
+                  <div className="font-serif text-2xl font-black text-black leading-none">
+                    DOCSCOUT
+                  </div>
+                  <div className="font-mono text-[9px] text-black/50 uppercase tracking-[0.3em]">
+                    RESEARCH
+                  </div>
+                </div>
+              </div>
+            </Link>
+            <div className="h-1 w-20 bg-black mx-auto" />
+          </div>
+
+          {/* Header */}
+          <div className="mb-10">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-8 h-8 border-2 border-black bg-black" />
+              <h1 className="font-mono text-3xl font-black uppercase tracking-wider text-black">
+                Sign In
+              </h1>
+            </div>
+            <div className="h-1 w-20 bg-black" />
+          </div>
+
+          {/* Sui Wallet Button - Large */}
           <motion.button
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.02, x: 4 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full border-2 border-black bg-black text-white font-mono text-sm font-bold uppercase tracking-wider py-4 px-6 hover:bg-white hover:text-black transition-all duration-200 flex items-center justify-center gap-3 group mb-4"
+            className="w-full border-2 border-black bg-black text-white font-mono text-base font-bold uppercase tracking-wider py-5 px-8 hover:bg-white hover:text-black transition-all duration-200 flex items-center justify-center gap-4 group mb-6"
           >
-            <div className="w-6 h-6 border-2 border-white bg-white group-hover:bg-black group-hover:border-black transition-colors flex items-center justify-center">
-              <span className="text-xs font-black text-black group-hover:text-white transition-colors">
-                S
+            <div className="w-8 h-8 border-2 border-white bg-white group-hover:bg-black group-hover:border-black transition-colors flex items-center justify-center">
+              <span className="text-sm font-black text-black group-hover:text-white transition-colors">
+                SUI
               </span>
             </div>
             <span>Connect Sui Wallet</span>
             <motion.svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
               fill="none"
-              className="group-hover:translate-x-1 transition-transform"
+              className="group-hover:translate-x-2 transition-transform"
             >
               <path
-                d="M3 8H13M13 8L9 4M13 8L9 12"
+                d="M4 10H16M16 10L12 6M16 10L12 14"
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
@@ -95,107 +155,85 @@ export default function LoginPage() {
           </div>
 
           {/* Alternative Options */}
-          <div className="space-y-3">
-            <button className="w-full border-2 border-black bg-white text-black font-mono text-xs font-bold uppercase tracking-wider py-3 px-4 hover:bg-black hover:text-white transition-all duration-200 text-left flex items-center justify-between group">
-              <span>Use Email</span>
+          <div className="space-y-3 mb-8">
+            <motion.button
+              whileHover={{ x: 4 }}
+              className="w-full border-2 border-black bg-white text-black font-mono text-sm font-bold uppercase tracking-wider py-4 px-6 hover:bg-black hover:text-white transition-all duration-200 text-left flex items-center justify-between group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 border border-black bg-black" />
+                <span>Use Email</span>
+              </div>
               <motion.svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
                 fill="none"
                 className="group-hover:translate-x-1 transition-transform"
               >
                 <path
-                  d="M1 6H11M11 6L7 2M11 6L7 10"
+                  d="M2 7H12M12 7L8 3M12 7L8 11"
                   stroke="currentColor"
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
               </motion.svg>
-            </button>
-            <button className="w-full border-2 border-black bg-white text-black font-mono text-xs font-bold uppercase tracking-wider py-3 px-4 hover:bg-black hover:text-white transition-all duration-200 text-left flex items-center justify-between group">
-              <span>Guest Access</span>
+            </motion.button>
+            <motion.button
+              whileHover={{ x: 4 }}
+              className="w-full border-2 border-black bg-white text-black font-mono text-sm font-bold uppercase tracking-wider py-4 px-6 hover:bg-black hover:text-white transition-all duration-200 text-left flex items-center justify-between group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 border border-black bg-white" />
+                <span>Guest Access</span>
+              </div>
               <motion.svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
                 fill="none"
                 className="group-hover:translate-x-1 transition-transform"
               >
                 <path
-                  d="M1 6H11M11 6L7 2M11 6L7 10"
+                  d="M2 7H12M12 7L8 3M12 7L8 11"
                   stroke="currentColor"
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
               </motion.svg>
-            </button>
+            </motion.button>
           </div>
 
-          {/* Footer */}
-          <div className="mt-8 pt-6 border-t-2 border-black">
+          {/* Footer Links */}
+          <div className="space-y-4 pt-6 border-t-2 border-black">
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[10px] text-black/50 uppercase tracking-wider">
+              <span className="font-mono text-xs text-black/60 uppercase tracking-wider">
                 New User?
               </span>
               <Link
                 href="/signup"
-                className="font-mono text-xs font-bold uppercase tracking-wider text-black hover:underline"
+                className="font-mono text-sm font-bold uppercase tracking-wider text-black hover:underline"
               >
-                Create Account
+                Create Account →
               </Link>
             </div>
-          </div>
-        </motion.div>
-
-        {/* Info Box */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-6 border-2 border-black bg-white p-4"
-        >
-          <div className="flex items-start gap-3">
-            <div className="w-4 h-4 border-2 border-black bg-black flex-shrink-0 mt-0.5" />
-            <div className="flex-1">
-              <p className="font-mono text-xs text-black/70 leading-relaxed">
-                By connecting your wallet, you agree to our Terms of Service and
-                Privacy Policy. Your wallet connection is secure and encrypted.
-              </p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Back Link */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-8 text-center"
-        >
-          <Link
-            href="/"
-            className="font-mono text-xs text-black/60 uppercase tracking-wider hover:text-black transition-colors inline-flex items-center gap-2"
-          >
-            <motion.svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              className="inline-block"
+            <Link
+              href="/"
+              className="font-mono text-xs text-black/50 uppercase tracking-wider hover:text-black transition-colors inline-flex items-center gap-2"
             >
-              <path
-                d="M11 6H1M1 6L5 2M1 6L5 10"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </motion.svg>
-            Back to Home
-          </Link>
+              ← Back to Home
+            </Link>
+          </div>
+
+          {/* Info */}
+          <div className="mt-8 p-4 border-2 border-black/20 bg-white/50">
+            <p className="font-mono text-[10px] text-black/60 leading-relaxed text-center">
+              By connecting, you agree to our Terms & Privacy Policy. Your
+              connection is secure and encrypted.
+            </p>
+          </div>
         </motion.div>
       </div>
     </main>
