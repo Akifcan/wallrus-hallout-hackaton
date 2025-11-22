@@ -15,18 +15,14 @@ export default function DashboardPage() {
       <div className="max-w-[1600px] mx-auto px-8 py-12 pt-40">
         {/* Dashboard Header */}
         <div className="mb-12">
-          <div className="flex items-start justify-between mb-8">
+          <div className="flex items-start justify-between">
             <div className="flex-1">
               <div className="inline-flex items-center gap-3 border-2 border-black bg-white px-4 py-2 mb-6">
                 <div className="w-3 h-3 bg-black" />
                 <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-black">
-                  Research Dashboard
+                  Dashboard
                 </span>
               </div>
-              <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl font-black text-black leading-[0.9] mb-6">
-                Dashboard
-              </h1>
-              <div className="h-2 w-32 bg-black mb-6" />
             </div>
             <div className="hidden lg:block">
               <div className="w-24 h-24 border-2 border-black bg-black rotate-[-4deg]" />
@@ -46,11 +42,10 @@ export default function DashboardPage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-8 py-4 border-2 border-black font-mono text-sm font-bold uppercase tracking-wider transition-all ${
-                activeTab === tab.id
-                  ? "bg-black text-white border-b-4 border-b-transparent"
-                  : "bg-white text-black hover:bg-black hover:text-white"
-              }`}
+              className={`px-8 py-4 border-2 border-black font-mono text-sm font-bold uppercase tracking-wider transition-all ${activeTab === tab.id
+                ? "bg-black text-white border-b-4 border-b-transparent"
+                : "bg-white text-black hover:bg-black hover:text-white"
+                }`}
             >
               {tab.label}
             </button>
