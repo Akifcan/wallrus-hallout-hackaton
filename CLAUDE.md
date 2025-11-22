@@ -1,3 +1,7 @@
+# What is DOCScout?
+
+- DocScout is an AI‑powered research assistant designed to help users collect information from the internet while doing homework, academic research, or general investigation. It enhances web queries using Google dork techniques, allowing users to search for specific keywords, file types, and targeted information across various sites. DocScout intelligently rewrites and optimizes search queries, interprets search results, summarizes or rewrites long texts, and extracts structured data. It also allows users to save discovered documents, text, and search outputs into decentralized storage such as Walrus. Overall, DocScout acts as a smart, automation‑driven tool that accelerates information gathering and organizes research data efficiently.
+
 # Development Guidelines
 
 - This file reminds the development guides. Eg. you can execute it after **/clean** command.
