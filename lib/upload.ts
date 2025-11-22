@@ -11,8 +11,6 @@ export default async function upload(file: any, contentType: string) {
     }
   );
 
-  console.log(response.data);
-
   const blobId = response.data?.newlyCreated?.blobObject?.blobId;
   if (!blobId) {
     throw new Error("BlobId not found in Walrus response");
