@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Connect from "./Connect";
 
 export default function ResearchHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -84,13 +85,7 @@ export default function ResearchHeader() {
 
           {/* Right side - CTA */}
           <div className="flex items-center gap-6">
-            <motion.button
-              className="hidden md:block relative px-10 py-4 bg-black text-white font-mono text-sm font-bold uppercase tracking-wider border-2 border-black group overflow-hidden"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span className="relative z-10">Connect Wallet</span>
-            </motion.button>
+            <Connect />
 
             {/* Mobile Menu */}
             <button

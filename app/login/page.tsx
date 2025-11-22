@@ -2,8 +2,39 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useConnectWallet, useCurrentAccount, useWallets } from "@mysten/dapp-kit";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function LoginPage() {
+  const { mutate: connect } = useConnectWallet();
+  const currentAccount = useCurrentAccount();
+  const wallets = useWallets();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (currentAccount) {
+      router.push("/dashboard");
+    }
+  }, [currentAccount, router]);
+
+  const handleConnect = () => {
+    const suiWallet = wallets.find(wallet =>
+      wallet.name.toLowerCase().includes('sui')
+    ) || wallets[0];
+
+    if (suiWallet) {
+      connect(
+        { wallet: suiWallet },
+        {
+          onSuccess: () => {
+            router.push("/dashboard");
+          },
+        }
+      );
+    }
+  };
+
   return (
     <main className="min-h-screen bg-[#f5f5f3] flex">
       {/* Left Side - Branding */}
@@ -103,6 +134,7 @@ export default function LoginPage() {
 
           {/* Sui Wallet Button - Large */}
           <motion.button
+            onClick={handleConnect}
             whileHover={{ scale: 1.02, x: 4 }}
             whileTap={{ scale: 0.98 }}
             className="w-full border-2 border-black bg-black text-white font-mono text-base font-bold uppercase tracking-wider py-5 px-8 hover:bg-white hover:text-black transition-all duration-200 flex items-center justify-center gap-4 group mb-6"
