@@ -91,45 +91,6 @@ export default function ModernFooter() {
             </ul>
           </div>
         </div>
-
-        {/* Bottom section */}
-        <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-gray-500">
-            © {currentYear} DocScout. All rights reserved.
-          </p>
-
-          {/* Social links */}
-          <div className="flex items-center gap-4">
-            <a
-              href="#"
-              className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
-              aria-label="Twitter"
-            >
-              <Twitter className="w-5 h-5" />
-            </a>
-            <a
-              href="#"
-              className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
-              aria-label="GitHub"
-            >
-              <Github className="w-5 h-5" />
-            </a>
-            <a
-              href="#"
-              className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="w-5 h-5" />
-            </a>
-            <a
-              href="#"
-              className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
-              aria-label="Email"
-            >
-              <Mail className="w-5 h-5" />
-            </a>
-          </div>
-        </div>
       </div>
     </footer>
   );

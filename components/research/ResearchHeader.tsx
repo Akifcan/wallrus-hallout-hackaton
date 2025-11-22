@@ -16,18 +16,17 @@ export default function ResearchHeader() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navItems = ["Features", "Technology", "Storage", "Pricing"];
+  const navItems = ["Features"];
 
   return (
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 100, damping: 15 }}
-      className={`fixed top-0 left-0 right-0 z-50 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 ${scrolled
           ? "bg-[#f5f5f3] border-b-2 border-black"
           : "bg-transparent"
-      }`}
+        }`}
     >
       <div className="max-w-[1600px] mx-auto px-8">
         <div className="flex items-center justify-between h-28">

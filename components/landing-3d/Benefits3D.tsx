@@ -280,22 +280,6 @@ export default function Benefits3D() {
                 Join 10,000+ researchers already using DocScout to accelerate their academic
                 success
               </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Button
-                  size="lg"
-                  className="bg-white text-blue-600 hover:bg-blue-50 px-10 py-7 text-lg font-semibold shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:shadow-[0_0_50px_rgba(255,255,255,0.5)] transition-all group"
-                >
-                  <span className="relative z-10">Start Free Trial</span>
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-xl px-10 py-7 text-lg font-semibold"
-                >
-                  Schedule Demo
-                </Button>
-              </div>
             </div>
           </div>
         </div>

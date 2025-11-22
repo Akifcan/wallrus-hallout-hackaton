@@ -22,26 +22,18 @@ function FeatureCard({ number, title, description, stats, delay }: FeatureCardPr
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       className="relative group"
     >
       <div
-        className={`border-2 border-black bg-white p-8 transition-all duration-200 ${
-          isHovered ? "bg-black text-white" : ""
-        }`}
+        className={`border-2 border-black bg-white p-8 transition-all duration-200 bg-black text-white`}
       >
         {/* Number badge */}
         <div className="flex items-center justify-between mb-6">
           <div
-            className={`w-12 h-12 border-2 border-black flex items-center justify-center ${
-              isHovered ? "bg-white" : "bg-black"
-            }`}
+            className={`w-12 h-12 border-2 border-black flex items-center justify-center bg-black`}
           >
             <span
-              className={`font-mono text-lg font-black ${
-                isHovered ? "text-black" : "text-white"
-              }`}
+              className={`font-mono text-lg font-black text-white`}
             >
               {number}
             </span>
@@ -54,9 +46,8 @@ function FeatureCard({ number, title, description, stats, delay }: FeatureCardPr
 
         {/* Title */}
         <h3
-          className={`font-mono text-xl font-bold uppercase tracking-wider mb-4 ${
-            isHovered ? "text-white" : "text-black"
-          }`}
+          className={`font-mono text-xl font-bold uppercase tracking-wider mb-4 ${isHovered ? "text-white" : "text-black"
+            }`}
         >
           {title}
         </h3>
@@ -68,9 +59,8 @@ function FeatureCard({ number, title, description, stats, delay }: FeatureCardPr
 
         {/* Description */}
         <p
-          className={`font-mono text-sm leading-relaxed mb-8 ${
-            isHovered ? "text-white/90" : "text-black/80"
-          }`}
+          className={`font-mono text-sm leading-relaxed mb-8 ${isHovered ? "text-white/90" : "text-black/80"
+            }`}
         >
           {description}
         </p>
@@ -80,21 +70,18 @@ function FeatureCard({ number, title, description, stats, delay }: FeatureCardPr
           {stats.map((stat, idx) => (
             <div key={idx} className="space-y-2">
               <div
-                className={`font-mono text-3xl font-black leading-none ${
-                  isHovered ? "text-white" : "text-black"
-                }`}
+                className={`font-mono text-3xl font-black leading-none ${isHovered ? "text-white" : "text-black"
+                  }`}
               >
                 {stat.value}
               </div>
               <div
-                className={`h-0.5 w-full ${
-                  isHovered ? "bg-white" : "bg-black"
-                }`}
+                className={`h-0.5 w-full ${isHovered ? "bg-white" : "bg-black"
+                  }`}
               />
               <div
-                className={`font-mono text-[10px] uppercase tracking-wider ${
-                  isHovered ? "text-white/70" : "text-black/60"
-                }`}
+                className={`font-mono text-[10px] uppercase tracking-wider ${isHovered ? "text-white/70" : "text-black/60"
+                  }`}
               >
                 {stat.label}
               </div>
@@ -110,49 +97,49 @@ export default function FeaturesGrid() {
   const features = [
     {
       number: "01",
-      title: "Search Intelligence Core",
+      title: "Smart Search Engine",
       description:
-        "Advanced query optimization using Google dork techniques combined with AI-powered semantic understanding for precision targeting across 50+ academic repositories.",
+        "Advanced search operators that discover PDFs, presentations, and academic documents from specific domains. Target .edu sites, filter by file type, and find exactly what you need with precision query optimization.",
       stats: [
         { label: "Precision", value: "98.7%" },
-        { label: "Response", value: "0.34s" },
+        { label: "File Types", value: "15+" },
       ],
     },
     {
       number: "02",
-      title: "AI Analysis Engine",
+      title: "AI Text Processor",
       description:
-        "128-layer transformer architecture trained on 500TB of academic literature, providing context-aware abstractive summarization and citation network mapping.",
+        "Transform lengthy documents into concise summaries, rewrite content in different styles, and generate multiple variants. Our AI understands context and extracts key insights from complex research materials.",
       stats: [
         { label: "Accuracy", value: "94.3%" },
-        { label: "Training", value: "500TB" },
+        { label: "Languages", value: "50+" },
       ],
     },
     {
       number: "03",
-      title: "Neural Network Nexus",
+      title: "Document Discovery",
       description:
-        "Hybrid CNN-RNN architecture with attention mechanisms for pattern recognition across diverse academic formats, enabling semantic comprehension beyond keywords.",
+        "Automatically find research papers, presentations, spreadsheets, and more across the web. Filter by keywords, topics, domains, and publication dates to uncover hidden academic treasures.",
       stats: [
-        { label: "Formats", value: "50+" },
-        { label: "Layers", value: "128" },
+        { label: "Formats", value: "PDF, DOC, PPT" },
+        { label: "Sources", value: "1000+" },
       ],
     },
     {
       number: "04",
-      title: "Secure Data Vault",
+      title: "Content Extraction",
       description:
-        "Enterprise-grade storage with AES-256 encryption and multi-region redundancy, featuring cryptographic key management through secure hardware modules.",
+        "Extract structured data from documents, identify key concepts, and organize information efficiently. Parse citations, references, and metadata automatically for comprehensive research organization.",
       stats: [
-        { label: "Uptime", value: "99.97%" },
-        { label: "Security", value: "AES-256" },
+        { label: "Speed", value: "0.34s" },
+        { label: "Accuracy", value: "96.2%" },
       ],
     },
     {
       number: "05",
-      title: "Walrus Blockchain",
+      title: "Walrus Storage",
       description:
-        "Decentralized permanent storage across 10,247 global nodes with immutable cryptographic hashing, eliminating single points of failure and ensuring data permanence.",
+        "Store your research permanently on decentralized blockchain infrastructure. Save discovered documents, summaries, and outputs to Walrus for eternal, censorship-resistant preservation.",
       stats: [
         { label: "Nodes", value: "10,247" },
         { label: "Uptime", value: "99.999%" },
@@ -160,18 +147,18 @@ export default function FeaturesGrid() {
     },
     {
       number: "06",
-      title: "Research Integration",
+      title: "Research Workspace",
       description:
-        "Unified workspace with automated citation generation (APA, MLA, Chicago, IEEE), real-time collaboration, and analytics dashboard for 12.5K+ active researchers.",
+        "Organize all your findings in one unified dashboard. Save searches, manage document collections, track research progress, and export data in multiple formats for homework and academic projects.",
       stats: [
-        { label: "Users", value: "12.5K" },
-        { label: "Citations", value: "847K" },
+        { label: "Users", value: "12.5K+" },
+        { label: "Saved Docs", value: "847K" },
       ],
     },
   ];
 
   return (
-    <section className="py-32 bg-[#f5f5f3] relative overflow-hidden">
+    <section className="py-32 bg-[#f5f5f3] relative overflow-hidden" id="features">
       <div className="max-w-[1600px] mx-auto px-8 relative z-10">
         {/* Section header - Brutalist style */}
         <div className="mb-20">
@@ -197,9 +184,9 @@ export default function FeaturesGrid() {
 
           <div className="max-w-2xl">
             <p className="font-mono text-base text-black/80 leading-relaxed">
-              Six interconnected modules powering the world's most advanced
-              academic research platform, processing 584,000 queries daily with
-              military-grade security and AI precision.
+              Six powerful features designed to accelerate your research workflow.
+              From intelligent search to AI-powered summarization and blockchain storage,
+              DocScout equips students and researchers with professional-grade tools.
             </p>
           </div>
         </div>

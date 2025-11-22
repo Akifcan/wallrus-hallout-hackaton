@@ -83,23 +83,23 @@ export default function GoogleDorkSection() {
 
   const features = [
     {
-      title: "Boolean Operators",
-      description: "Automated AND, OR, NOT logic for precision targeting",
-      icon: "∧∨¬",
-    },
-    {
-      title: "Site Filtering",
-      description: "Target .edu, .gov, and academic domains exclusively",
-      icon: "🎯",
-    },
-    {
-      title: "File Type Search",
-      description: "PDF, DOC, PPT - extract knowledge from any format",
+      title: "File Type Targeting",
+      description: "Search specifically for PDFs, DOCs, PPTs, XLS and more",
       icon: "📄",
     },
     {
-      title: "Date Filtering",
-      description: "Access latest publications with temporal constraints",
+      title: "Domain Filtering",
+      description: "Focus on .edu, .gov, or specific academic institutions",
+      icon: "🎯",
+    },
+    {
+      title: "Keyword Extraction",
+      description: "Find documents containing exact phrases and topics",
+      icon: "🔍",
+    },
+    {
+      title: "Date Constraints",
+      description: "Filter results by publication year and time range",
       icon: "📅",
     },
   ];
@@ -127,17 +127,17 @@ export default function GoogleDorkSection() {
 
             {/* Heading */}
             <h2 className="font-serif text-5xl md:text-6xl font-bold text-black mb-6 leading-tight">
-              Google Dork Intelligence
+              Advanced Search Intelligence
             </h2>
 
             <div className="w-16 h-1 bg-black mb-6" />
 
             {/* Description */}
             <p className="font-mono text-base text-black/80 leading-relaxed mb-8">
-              DocScout transforms natural language queries into advanced search
-              operators, leveraging Google dork techniques to penetrate deep web
-              repositories and surface hidden academic treasures. Our AI rewrites,
-              optimizes, and executes precision searches across 50+ databases.
+              DocScout uses powerful search operators and query optimization to uncover research materials
+              hidden across the web. Search for specific file types, target academic domains,
+              filter by keywords and dates—our AI automatically rewrites and optimizes your queries to find
+              PDFs, documents, presentations, and articles that traditional search engines miss.
             </p>
 
             {/* Features list */}
@@ -163,18 +163,6 @@ export default function GoogleDorkSection() {
                 </motion.div>
               ))}
             </div>
-
-            {/* Example queries */}
-            <div className="border-4 border-black p-6 bg-[#f5f5f3]">
-              <div className="font-mono text-xs uppercase tracking-wider mb-4 text-black/60">
-                Example Queries ↓
-              </div>
-              <div className="space-y-2">
-                {queries.slice(0, 3).map((query, idx) => (
-                  <AnimatedQuery key={idx} query={query} delay={idx * 200} />
-                ))}
-              </div>
-            </div>
           </div>
 
           {/* Right: 3D Visualization */}
@@ -188,9 +176,8 @@ export default function GoogleDorkSection() {
 
             {/* Overlay statistics */}
             <div className="absolute bottom-6 left-6 right-6">
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 gap-4">
                 {[
-                  { label: "Queries/Sec", value: "142" },
                   { label: "Accuracy", value: "98.7%" },
                   { label: "Sources", value: "50+" },
                 ].map((stat, idx) => (

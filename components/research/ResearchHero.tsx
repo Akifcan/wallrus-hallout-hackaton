@@ -197,8 +197,9 @@ export default function ResearchHero() {
             {/* Description */}
             <div className="max-w-lg space-y-6">
               <p className="font-mono text-base text-black/80 leading-relaxed">
-                Advanced research intelligence powered by AI. Process millions of documents,
-                optimize queries, and discover insights faster than ever.
+                Your AI-powered research companion that aggregates scattered information from across the web.
+                Discover PDFs, papers, and documents using intelligent search techniques, then summarize
+                and refine them with artificial intelligence—all in one powerful platform.
               </p>
               <div className="flex items-center gap-4">
                 <div className="h-1 w-16 bg-black" />
@@ -208,13 +209,9 @@ export default function ResearchHero() {
               </div>
             </div>
 
-            {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4 pt-4">
               <button className="px-10 py-5 bg-black text-white font-mono text-sm font-bold uppercase tracking-wider border-2 border-black hover:bg-white hover:text-black transition-all duration-200">
                 Start Research
-              </button>
-              <button className="px-10 py-5 bg-white text-black font-mono text-sm font-bold uppercase tracking-wider border-2 border-black hover:bg-black hover:text-white transition-all duration-200">
-                View Demo
               </button>
             </div>
           </div>
@@ -301,35 +298,6 @@ export default function ResearchHero() {
               <div className="w-16 h-16 border-2 border-black bg-white rotate-[-4deg]" />
               <div className="w-16 h-16 border-2 border-black bg-black rotate-[4deg]" />
             </div>
-          </div>
-        </div>
-
-        {/* Bottom Section - Features Preview */}
-        <div className="mt-32 border-t-4 border-black pt-16">
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { title: "AI-Powered", desc: "Advanced query optimization" },
-              { title: "Blockchain", desc: "Decentralized storage" },
-              { title: "Fast", desc: "Sub-second responses" },
-            ].map((feature, index) => (
-              <div
-                key={index}
-                className="border-2 border-black bg-white p-6 hover:bg-black hover:text-white transition-all duration-200 group"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="w-8 h-8 border-2 border-black bg-white group-hover:bg-black transition-colors" />
-                  <span className="font-mono text-xs text-black/40 group-hover:text-white/40">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                </div>
-                <h4 className="font-mono text-lg font-bold uppercase tracking-wider mb-2">
-                  {feature.title}
-                </h4>
-                <p className="font-mono text-xs text-black/60 group-hover:text-white/80">
-                  {feature.desc}
-                </p>
-              </div>
-            ))}
           </div>
         </div>
 

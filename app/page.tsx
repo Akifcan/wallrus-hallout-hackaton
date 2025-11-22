@@ -14,9 +14,6 @@ export default function ResearchPage() {
       <ResearchHeader />
       <ResearchHero />
       <FeaturesGrid />
-      <GoogleDorkSection />
-      <WalrusSection />
-      <CallToAction />
       <ResearchFooter />
     </main>
   );

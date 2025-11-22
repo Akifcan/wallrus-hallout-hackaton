@@ -106,28 +106,16 @@ function StatCard({ value, label, delay }: StatCardProps) {
 export default function WalrusSection() {
   const benefits = [
     {
-      title: "Permanent Storage",
+      title: "Permanent Preservation",
       description:
-        "One-time payment for infinite data retention. Your research lives forever on the blockchain, accessible across generations.",
+        "Store research documents, PDFs, summaries, and outputs forever. One-time payment ensures your academic work remains accessible for life, with no recurring fees or data expiration.",
       icon: "∞",
     },
     {
-      title: "Decentralized Security",
+      title: "Decentralized Network",
       description:
-        "10,247 global nodes ensure 99.999% uptime. No single point of failure, no corporate gatekeepers, no censorship.",
+        "Your data is distributed across 10,247 global nodes. No single server failure can delete your research. True redundancy ensures 99.999% availability and censorship resistance.",
       icon: "🔐",
-    },
-    {
-      title: "Cryptographic Integrity",
-      description:
-        "Immutable hashing guarantees data hasn't been tampered with. Every document carries mathematical proof of authenticity.",
-      icon: "⚡",
-    },
-    {
-      title: "Cost Efficiency",
-      description:
-        "Pay once, store forever. No monthly subscriptions, no surprise fees, no vendor lock-in. True ownership of your data.",
-      icon: "💎",
     },
   ];
 
@@ -157,30 +145,10 @@ export default function WalrusSection() {
           <div className="w-24 h-1 bg-black mx-auto mb-6" />
 
           <p className="font-mono text-lg text-black/80 max-w-3xl mx-auto leading-relaxed">
-            Your research deserves immortality. DocScout leverages Walrus blockchain
-            technology to provide permanent, censorship-resistant, and cryptographically
-            secure storage across a global network of 10,247 nodes.
+            Save your discoveries forever. DocScout integrates Walrus blockchain storage
+            to preserve your research documents, summaries, and findings permanently.
+            No subscriptions, no data loss—just one-time payment for eternal, decentralized storage.
           </p>
-        </div>
-
-        {/* 3D Network Visualization */}
-        <div className="mb-16">
-          <div className="relative h-[500px] border-4 border-black bg-white overflow-hidden">
-            <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
-              <color attach="background" args={["#f5f5f3"]} />
-              <ambientLight intensity={0.6} />
-              <pointLight position={[10, 10, 10]} intensity={0.4} />
-              <WalrusNetworkPlane />
-              <NetworkNodes />
-            </Canvas>
-
-            {/* Overlay title */}
-            <div className="absolute top-6 left-6 border-2 border-black bg-white px-4 py-2">
-              <span className="font-mono text-xs uppercase tracking-wider">
-                Live Network Topology
-              </span>
-            </div>
-          </div>
         </div>
 
         {/* Stats grid */}
@@ -218,55 +186,11 @@ export default function WalrusSection() {
           ))}
         </div>
 
-        {/* How it works section */}
-        <div className="border-4 border-black bg-white p-12">
-          <h3 className="font-serif text-3xl font-bold text-black mb-8 text-center">
-            How Walrus Storage Works
-          </h3>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {[
-              {
-                step: "1",
-                title: "Upload",
-                desc: "Submit research documents to DocScout interface",
-              },
-              {
-                step: "2",
-                title: "Fragment",
-                desc: "Data is encrypted and split into redundant shards",
-              },
-              {
-                step: "3",
-                title: "Distribute",
-                desc: "Shards replicate across 10,247 global nodes",
-              },
-              {
-                step: "4",
-                title: "Verify",
-                desc: "Cryptographic hashing ensures permanent integrity",
-              },
-            ].map((item, idx) => (
-              <div key={idx} className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 border-4 border-black bg-[#f5f5f3] font-serif text-2xl font-bold mb-4">
-                  {item.step}
-                </div>
-                <h4 className="font-mono font-bold text-black mb-2">
-                  {item.title}
-                </h4>
-                <p className="font-mono text-xs text-black/70">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
 
         {/* Bottom border */}
         <div className="mt-16 border-t-4 border-black pt-8">
           <div className="flex items-center justify-between font-mono text-xs text-black/60">
-            <span>WALRUS PROTOCOL v2.1</span>
-            <span>POWERED BY BLOCKCHAIN TECHNOLOGY</span>
+            <span>POWERED BY Overblock</span>
             <span>BUILT FOR PERMANENCE</span>
           </div>
         </div>

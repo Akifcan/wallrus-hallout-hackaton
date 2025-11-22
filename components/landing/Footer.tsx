@@ -65,25 +65,6 @@ export default function Footer() {
                 analyze, and organize information faster with advanced search
                 optimization and decentralized storage.
               </p>
-
-              {/* Social Links */}
-              <div className="flex gap-3">
-                {socialLinks.map((social, index) => {
-                  const Icon = social.icon;
-                  return (
-                    <motion.a
-                      key={index}
-                      href={social.href}
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="p-2 bg-gray-800 hover:bg-gradient-to-br hover:from-blue-600 hover:to-indigo-600 rounded-lg transition-all duration-300 group"
-                      aria-label={social.label}
-                    >
-                      <Icon className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
-                    </motion.a>
-                  );
-                })}
-              </div>
             </motion.div>
           </div>
 
@@ -153,42 +134,6 @@ export default function Footer() {
             </ul>
           </motion.div>
         </div>
-
-        {/* Bottom Bar */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="pt-8 border-t border-gray-800"
-        >
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 text-sm">
-              &copy; {currentYear} DocScout. All rights reserved.
-            </p>
-
-            <div className="flex gap-6 text-sm">
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                Terms of Service
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                Cookie Policy
-              </a>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </footer>
   );
