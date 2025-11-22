@@ -24,8 +24,8 @@ export default function ResearchHeader() {
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 100, damping: 15 }}
       className={`fixed top-0 left-0 right-0 z-50 ${scrolled
-          ? "bg-[#f5f5f3] border-b-2 border-black"
-          : "bg-transparent"
+        ? "bg-[#f5f5f3] border-b-2 border-black"
+        : "bg-transparent"
         }`}
     >
       <div className="max-w-[1600px] mx-auto px-8">
@@ -85,20 +85,11 @@ export default function ResearchHeader() {
           {/* Right side - CTA */}
           <div className="flex items-center gap-6">
             <motion.button
-              className="relative px-10 py-4 bg-black text-white font-mono text-sm font-bold uppercase tracking-wider border-2 border-black group overflow-hidden"
+              className="hidden md:block relative px-10 py-4 bg-black text-white font-mono text-sm font-bold uppercase tracking-wider border-2 border-black group overflow-hidden"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="relative z-10">Start</span>
-              <motion.div
-                className="absolute inset-0 bg-white"
-                initial={{ y: "100%" }}
-                whileHover={{ y: 0 }}
-                transition={{ duration: 0.3 }}
-              />
-              <span className="relative z-10 text-black opacity-0 group-hover:opacity-100 transition-opacity">
-                Start
-              </span>
+              <span className="relative z-10">Connect Wallet</span>
             </motion.button>
 
             {/* Mobile Menu */}

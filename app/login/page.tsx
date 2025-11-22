@@ -51,28 +51,13 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 gap-4 pt-8 border-t-2 border-white/20">
-            <div>
-              <div className="font-mono text-3xl font-black mb-2">98.7%</div>
-              <div className="font-mono text-xs text-white/60 uppercase tracking-wider">
-                Precision
-              </div>
-            </div>
-            <div>
-              <div className="font-mono text-3xl font-black mb-2">0.34s</div>
-              <div className="font-mono text-xs text-white/60 uppercase tracking-wider">
-                Response
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Footer */}
         <div className="flex items-center gap-4">
           <div className="w-4 h-4 border-2 border-white bg-white" />
           <span className="font-mono text-xs text-white/60 uppercase tracking-wider">
-            Secure • Encrypted • Decentralized
+            Powered By Walrus • Decentralized
           </span>
         </div>
       </motion.div>
@@ -145,94 +130,14 @@ export default function LoginPage() {
             </motion.svg>
           </motion.button>
 
-          {/* Divider */}
-          <div className="flex items-center gap-4 my-8">
-            <div className="flex-1 h-0.5 bg-black" />
-            <span className="font-mono text-xs text-black/60 uppercase tracking-wider">
-              OR
-            </span>
-            <div className="flex-1 h-0.5 bg-black" />
-          </div>
-
-          {/* Alternative Options */}
-          <div className="space-y-3 mb-8">
-            <motion.button
-              whileHover={{ x: 4 }}
-              className="w-full border-2 border-black bg-white text-black font-mono text-sm font-bold uppercase tracking-wider py-4 px-6 hover:bg-black hover:text-white transition-all duration-200 text-left flex items-center justify-between group"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 border border-black bg-black" />
-                <span>Use Email</span>
-              </div>
-              <motion.svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                className="group-hover:translate-x-1 transition-transform"
-              >
-                <path
-                  d="M2 7H12M12 7L8 3M12 7L8 11"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </motion.svg>
-            </motion.button>
-            <motion.button
-              whileHover={{ x: 4 }}
-              className="w-full border-2 border-black bg-white text-black font-mono text-sm font-bold uppercase tracking-wider py-4 px-6 hover:bg-black hover:text-white transition-all duration-200 text-left flex items-center justify-between group"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 border border-black bg-white" />
-                <span>Guest Access</span>
-              </div>
-              <motion.svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                className="group-hover:translate-x-1 transition-transform"
-              >
-                <path
-                  d="M2 7H12M12 7L8 3M12 7L8 11"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </motion.svg>
-            </motion.button>
-          </div>
-
           {/* Footer Links */}
           <div className="space-y-4 pt-6 border-t-2 border-black">
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-xs text-black/60 uppercase tracking-wider">
-                New User?
-              </span>
-              <Link
-                href="/signup"
-                className="font-mono text-sm font-bold uppercase tracking-wider text-black hover:underline"
-              >
-                Create Account →
-              </Link>
-            </div>
             <Link
               href="/"
               className="font-mono text-xs text-black/50 uppercase tracking-wider hover:text-black transition-colors inline-flex items-center gap-2"
             >
               ← Back to Home
             </Link>
-          </div>
-
-          {/* Info */}
-          <div className="mt-8 p-4 border-2 border-black/20 bg-white/50">
-            <p className="font-mono text-[10px] text-black/60 leading-relaxed text-center">
-              By connecting, you agree to our Terms & Privacy Policy. Your
-              connection is secure and encrypted.
-            </p>
           </div>
         </motion.div>
       </div>
