@@ -10,7 +10,6 @@ export async function POST(request: Request) {
       abortEarly: false,
     });
     const { url } = validatedData;
-    console.log(url);
 
     const file = await axios.get(url, {
       responseType: "arraybuffer",
