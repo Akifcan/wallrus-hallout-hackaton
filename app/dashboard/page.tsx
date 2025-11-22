@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import AuthGuard from "@/components/auth/AuthGuard";
 import ResearchHeader from "@/components/research/ResearchHeader";
 import ResearchFooter from "@/components/research/ResearchFooter";
 import WordResearch from "@/components/dashboard/WordResearch";
@@ -13,6 +14,7 @@ export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("search");
 
   return (
+    <AuthGuard>
     <main className="min-h-screen bg-[#f5f5f3]">
       <ResearchHeader />
       <div className="max-w-[1600px] mx-auto px-8 py-12 pt-40">
@@ -66,5 +68,6 @@ export default function DashboardPage() {
       </div>
       <ResearchFooter />
     </main>
+    </AuthGuard>
   );
 }
