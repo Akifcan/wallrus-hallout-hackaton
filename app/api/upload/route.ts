@@ -1,13 +1,6 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
-import * as yup from "yup";
-
-const uploadSchema = yup.object({
-  url: yup
-    .string()
-    .required("URL is required")
-    .url("URL must be a valid URL"),
-});
+import { uploadSchema } from "@/lib/schemas";
 
 export async function POST(request: Request) {
   try {
@@ -26,7 +19,8 @@ export async function POST(request: Request) {
     });
 
     // Get content type from response headers
-    const contentType = file.headers["content-type"] || "application/octet-stream";
+    const contentType =
+      file.headers["content-type"] || "application/octet-stream";
 
     // Upload to Walrus - send the buffer directly as body
     const numEpochs = 5;
@@ -55,18 +49,6 @@ export async function POST(request: Request) {
       blobId,
     });
   } catch (e) {
-    // Handle Yup validation errors
-    if (e instanceof yup.ValidationError) {
-      return NextResponse.json(
-        {
-          error: "Validation failed",
-          errors: e.errors,
-        },
-        { status: 400 }
-      );
-    }
-
-    console.error("Upload error:", e);
     return NextResponse.json(
       { error: "Failed to upload to Walrus" },
       { status: 500 }
