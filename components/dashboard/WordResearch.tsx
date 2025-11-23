@@ -59,33 +59,6 @@ export default function WordResearch() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Recent Searches */}
-      <div className="border-2 border-black bg-white p-8">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="font-mono text-lg font-bold uppercase tracking-wider text-black">
-            Recent Searches
-          </h3>
-          <div className="w-4 h-4 border-2 border-black bg-black" />
-        </div>
-        <div className="space-y-3">
-          {["AI-powered research", "Blockchain storage", "Semantic search"].map(
-            (search, idx) => (
-              <div
-                key={idx}
-                className="border-2 border-black bg-white p-4 hover:bg-black hover:text-white transition-all cursor-pointer"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-sm font-bold">{search}</span>
-                  <span className="font-mono text-xs text-black/60">
-                    2 days ago
-                  </span>
-                </div>
-              </div>
-            )
-          )}
-        </div>
-      </div>
     </motion.div>
   );
 }
