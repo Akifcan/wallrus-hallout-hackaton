@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useCurrentAccount } from "@mysten/dapp-kit";
 import instance from "@/lib/api";
+import { toast } from "sonner";
 
 export default function Notes() {
   const [title, setTitle] = useState("");
@@ -43,7 +44,11 @@ export default function Notes() {
       setTitle("");
       setContent("");
       setProjectId("");
+      toast.success("Notes created successfully!");
     },
+    onError: () => {
+      toast.error("Failed to create notes. Please try again.");
+    }
   });
 
   const handleSubmit = (e: React.FormEvent) => {
