@@ -16,6 +16,8 @@ export async function PUT(
     );
   }
 
+  console.log(is_public);
+
   // First, get the project by slug
   const project = await supabase
     .from("project")

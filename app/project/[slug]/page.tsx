@@ -23,7 +23,6 @@ export default function Project() {
       return response.data;
     },
   });
-
   return (
     <DashboardLayout title="Project Archive">
       <div className="space-y-8">
@@ -42,7 +41,7 @@ export default function Project() {
             EDIT RESEARCH META
           </button>
 
-          <ProjectPublicToggle />
+          {projectData && <ProjectPublicToggle defaultStatus={projectData?.project?.is_public} />}
         </div>
 
         <ProjectSummaries />

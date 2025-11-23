@@ -1,85 +1,34 @@
-import { useState, useEffect } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import instance from "@/lib/api";
 import { toast } from "sonner";
-import { Switch } from "@/components/ui/switch";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Switch } from "../ui/switch";
 
-export default function ProjectPublicToggle() {
+export default function ProjectPublicToggle({ defaultStatus }: { defaultStatus: boolean }) {
   const params = useParams();
   const slug = params.slug as string;
-  const [isPublic, setIsPublic] = useState(false);
+  const [isActive, setActive] = useState(defaultStatus)
+  console.log(defaultStatus)
 
-  const { data: projectData } = useQuery({
-    queryKey: ["project", slug],
-    queryFn: async () => {
-      const response = await instance.get(`/api/project/${slug}`);
-      return response.data;
+  const mutation = useMutation({
+    mutationFn: (value: boolean) => {
+      return instance.put(`/api/project/${slug}/toggle-public`, { is_public: value })
     },
-  });
-
-  useEffect(() => {
-    if (!projectData) {
-      return
+    onSuccess: (data: any) => {
+      setActive(prev => !prev)
+      toast.success(data.data.project.is_public ? 'This research is public now' : 'This research is private now')
+    },
+    onError: (e) => {
+      toast.success('Unexecpted error occured')
     }
-    setIsPublic(projectData?.project?.is_public);
-  }, [projectData]);
+  })
 
-  const togglePublicMutation = useMutation({
-    mutationFn: async (isPublic: boolean) => {
-      const response = await instance.put(`/api/project/${slug}/toggle-public`, {
-        is_public: isPublic,
-      });
-      return response.data;
-    },
-    onSuccess: () => {
-      toast.success("Project visibility updated successfully!");
-    },
-    onError: () => {
-      toast.error("Failed to update project visibility");
-      setIsPublic(!isPublic);
-    },
-  });
-
-  const handleTogglePublic = (checked: boolean) => {
-    setIsPublic(checked);
-    togglePublicMutation.mutate(checked);
-  };
+  const handleChange = (checked: boolean) => {
+    mutation.mutate(checked)
+  }
 
   return (
-    <>
-      {/* Public Toggle */}
-      <div className="flex items-center gap-3 border-4 border-black bg-white px-6 py-3">
-        <label
-          htmlFor="public-toggle"
-          className="font-mono text-sm font-bold uppercase tracking-wider text-black cursor-pointer"
-        >
-          Public
-        </label>
-        <Switch
-          id="public-toggle"
-          checked={isPublic}
-          onCheckedChange={handleTogglePublic}
-          disabled={togglePublicMutation.isPending}
-        />
-      </div>
-
-      {/* Public Indicator */}
-      {isPublic && (
-        <div className="border-4 border-green-600 bg-green-50 p-4 w-full">
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">🌍</span>
-            <div>
-              <p className="font-mono text-sm font-bold uppercase tracking-wider text-green-800">
-                PUBLIC RESEARCH
-              </p>
-              <p className="font-mono text-xs text-green-700 mt-1">
-                This research is visible to everyone
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+    <Switch checked={isActive} onCheckedChange={handleChange}>Project publish status</Switch>
   );
 }
