@@ -9,6 +9,7 @@ import FileResearch from "@/components/dashboard/FileResearch";
 import GenerateSummary from "@/components/dashboard/GenerateSummary";
 import FoldersProjects from "@/components/dashboard/FoldersProjects";
 import Notes from "@/components/dashboard/Notes";
+import LastCreatedProjects from "@/components/dashboard/LastCreatedProjects";
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("search");
@@ -55,6 +56,11 @@ export default function DashboardPage() {
                 {tab.label}
               </button>
             ))}
+          </div>
+
+          {/* Recent Projects */}
+          <div className="mb-8">
+            <LastCreatedProjects />
           </div>
 
           {/* Tab Content */}

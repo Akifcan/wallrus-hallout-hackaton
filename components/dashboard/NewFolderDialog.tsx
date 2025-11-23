@@ -31,15 +31,18 @@ export default function NewFolderDialog({
       })
       return response.data
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success("Project created successfully!");
       setProjectName("");
       onOpenChange(false);
       queryClient.invalidateQueries({
         queryKey: ["projects", currentAccount?.address],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["recent-projects", currentAccount?.address],
+      });
     },
-    onError: (error) => {
+    onError: () => {
       toast.error("Failed to create project. Please try again.");
     },
   });
