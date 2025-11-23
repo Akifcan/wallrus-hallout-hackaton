@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 
 interface FeatureCardProps {
   number: string;
@@ -9,9 +10,10 @@ interface FeatureCardProps {
   description: string;
   stats: Array<{ label: string; value: string }>;
   delay: number;
+  icon?: string;
 }
 
-function FeatureCard({ number, title, description, stats, delay }: FeatureCardProps) {
+function FeatureCard({ number, title, description, stats, delay, icon }: FeatureCardProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [isHovered, setIsHovered] = useState(false);
@@ -32,11 +34,19 @@ function FeatureCard({ number, title, description, stats, delay }: FeatureCardPr
           <div
             className={`w-12 h-12 border-2 border-black flex items-center justify-center bg-black`}
           >
-            <span
-              className={`font-mono text-lg font-black text-white`}
-            >
-              {number}
-            </span>
+            {icon ? (
+              <Image
+                src={icon}
+                alt=""
+                width={32}
+                height={32}
+                className="object-contain"
+              />
+            ) : (
+              <span className={`font-mono text-lg font-black text-white`}>
+                {number}
+              </span>
+            )}
           </div>
           <div className="flex gap-1">
             <div className="w-2 h-2 border border-black bg-black" />
@@ -144,6 +154,7 @@ export default function FeaturesGrid() {
         { label: "Nodes", value: "10,247" },
         { label: "Uptime", value: "99.999%" },
       ],
+      icon: "/4_icon_token_RGB.png",
     },
     {
       number: "06",

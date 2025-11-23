@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 export default function ResearchFooter() {
   const currentYear = new Date().getFullYear();
 
@@ -41,11 +43,19 @@ export default function ResearchFooter() {
 
       {/* Bottom decorative strip */}
       <div className="border-t-4 border-white bg-white text-black">
-        <div className="max-w-7xl mx-auto px-6 py-2">
+        <div className="max-w-7xl mx-auto px-6 py-3">
           <div className="flex items-center justify-between font-mono text-xs">
             <span>BUILT By Overblock</span>
-            <span>●</span>
-            <span>POWERED BY Warlus</span>
+            <div className="flex items-center gap-2">
+              <span>POWERED BY</span>
+              <Image
+                src="/1_primary_logo_black_RGB.png"
+                alt="Walrus"
+                width={80}
+                height={24}
+                className="object-contain"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Connect from "./Connect";
 import { useCurrentAccount } from "@mysten/dapp-kit";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ResearchHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -127,6 +128,17 @@ export default function ResearchHeader() {
 
           {/* Right side - CTA */}
           <div className="flex items-center gap-6">
+            {/* Powered by Walrus badge */}
+            <div className="hidden md:flex items-center gap-2 border-2 border-black px-3 py-1.5 bg-white">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-black/60">Powered by</span>
+              <Image
+                src="/1_primary_logo_black_RGB.png"
+                alt="Walrus"
+                width={60}
+                height={18}
+                className="object-contain"
+              />
+            </div>
             <Connect />
 
             {/* Mobile Menu */}
