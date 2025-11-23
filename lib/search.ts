@@ -1,4 +1,4 @@
-import { JSDOM } from "jsdom";
+import * as cheerio from "cheerio";
 
 export default async function search(keyword: string) {
   const searchUrl = `https://yandex.com.tr/search/?text=${encodeURIComponent(keyword)}`;
@@ -12,8 +12,7 @@ export default async function search(keyword: string) {
   });
 
   const html = await response.text();
-  const dom = new JSDOM(html);
-  const document = dom.window.document;
+  const $ = cheerio.load(html);
 
   const searchResults: Array<{
     title: string;
@@ -22,20 +21,15 @@ export default async function search(keyword: string) {
   }> = [];
 
   // Get all result cards
-  const resultElements = document.querySelectorAll(".serp-item_card");
-
-  resultElements.forEach((element) => {
+  $(".serp-item_card").each((_, element) => {
     // Get link
-    const linkElement = element.querySelector("a");
-    const link = linkElement?.getAttribute("href") || "";
+    const link = $(element).find("a").attr("href") || "";
 
     // Get title
-    const titleElement = element.querySelector(".OrganicTitle-Link");
-    const title = titleElement?.textContent?.trim() || "";
+    const title = $(element).find(".OrganicTitle-Link").text().trim();
 
     // Get description
-    const snippetElement = element.querySelector(".OrganicTextContentSpan");
-    const snippet = snippetElement?.textContent?.trim() || "";
+    const snippet = $(element).find(".OrganicTextContentSpan").text().trim();
 
     if (link && title) {
       searchResults.push({
