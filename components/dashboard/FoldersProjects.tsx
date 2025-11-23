@@ -5,6 +5,7 @@ import { useState } from "react";
 import NewFolderDialog from "./NewFolderDialog";
 import { useQuery } from "@tanstack/react-query";
 import { useCurrentAccount } from "@mysten/dapp-kit";
+import instance from "@/lib/api";
 
 export default function FoldersProjects() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -13,19 +14,9 @@ export default function FoldersProjects() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["projects", currentAccount?.address],
     queryFn: async () => {
-      const response = await fetch("/api/get-projects", {
-        headers: {
-          "x-wallet-address": currentAccount?.address || "",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch projects");
-      }
-
-      return response.json();
+      const response = await instance.get('/api/get-projects')
+      return response.data
     },
-    enabled: !!currentAccount?.address,
   });
 
   return (
@@ -92,9 +83,8 @@ export default function FoldersProjects() {
                         className={`w-12 h-12 border-2 border-black ${color} group-hover:bg-white group-hover:border-white flex items-center justify-center`}
                       >
                         <span
-                          className={`font-mono text-lg font-black ${
-                            color === "bg-black" ? "text-white" : "text-black"
-                          } group-hover:text-black`}
+                          className={`font-mono text-lg font-black ${color === "bg-black" ? "text-white" : "text-black"
+                            } group-hover:text-black`}
                         >
                           📁
                         </span>

@@ -3,6 +3,7 @@
 import { useEffect, useState, ReactNode } from "react";
 import { useCurrentAccount } from "@mysten/dapp-kit";
 import { useRouter } from "next/navigation";
+import instance from "@/lib/api";
 
 interface AuthGuardProps {
   children: ReactNode;
@@ -18,6 +19,7 @@ export default function AuthGuard({ children, redirectTo = "/" }: AuthGuardProps
     if (!currentAccount) {
       router.push(redirectTo);
     } else {
+      instance.defaults.headers['x-wallet-address'] = currentAccount.address
       setIsLoading(false);
     }
   }, [currentAccount, router, redirectTo]);

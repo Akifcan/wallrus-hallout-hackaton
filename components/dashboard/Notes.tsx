@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useCurrentAccount } from "@mysten/dapp-kit";
+import instance from "@/lib/api";
 
 export default function Notes() {
   const [title, setTitle] = useState("");
@@ -35,20 +36,8 @@ export default function Notes() {
       content: string;
       project_id: string;
     }) => {
-      const response = await fetch("/api/create-note", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-wallet-address": currentAccount?.address || "",
-        },
-        body: JSON.stringify(noteData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create note");
-      }
-
-      return response.json();
+      const response = await instance.post('/api/create-note', noteData)
+      return response.data
     },
     onSuccess: () => {
       setTitle("");
