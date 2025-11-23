@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import instance from "@/lib/api";
@@ -10,6 +10,7 @@ export default function GenerateSummary() {
   const [content, setContent] = useState("");
   const [summaryLength, setSummaryLength] = useState("short");
   const [language, setLanguage] = useState("English");
+  const [isFormCollapsed, setIsFormCollapsed] = useState(false);
 
   const summarizeMutation = useMutation({
     mutationFn: async (data: {
@@ -22,6 +23,7 @@ export default function GenerateSummary() {
     },
     onSuccess: () => {
       toast.success("Summary generated successfully!");
+      setIsFormCollapsed(true);
     },
     onError: (e) => {
       console.log(e)
@@ -49,85 +51,106 @@ export default function GenerateSummary() {
           <h2 className="font-mono text-xl font-bold uppercase tracking-wider text-black">
             Generate Summary
           </h2>
-          <div className="w-6 h-6 border-2 border-black bg-black" />
+          <div className="flex items-center gap-4">
+            {summarizeMutation.isSuccess && (
+              <button
+                type="button"
+                onClick={() => setIsFormCollapsed(!isFormCollapsed)}
+                className="border-2 border-black bg-white px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider hover:bg-black hover:text-white transition-all"
+              >
+                {isFormCollapsed ? "Show Form ↓" : "Hide Form ↑"}
+              </button>
+            )}
+            <div className="w-6 h-6 border-2 border-black bg-black" />
+          </div>
         </div>
         <div className="h-1 w-16 bg-black mb-6" />
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="font-mono text-sm font-bold uppercase tracking-wider text-black mb-3 block">
-              Input Text
-            </label>
-            <div className="border-2 border-black bg-white p-4">
-              <textarea
-                rows={8}
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Paste your text here..."
-                className="w-full font-mono text-base text-black placeholder-black/40 bg-transparent border-none outline-none resize-none"
-                required
-                minLength={10}
-                disabled={summarizeMutation.isPending}
-              />
-            </div>
-            {content.length > 0 && content.length < 10 && (
-              <p className="font-mono text-xs text-red-600 mt-2">
-                Text must be at least 10 characters long ({content.length}/10)
-              </p>
-            )}
-          </div>
+        <AnimatePresence>
+          {!isFormCollapsed && (
+            <motion.form
+              initial={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              onSubmit={handleSubmit}
+              className="space-y-6"
+            >
+              <div>
+                <label className="font-mono text-sm font-bold uppercase tracking-wider text-black mb-3 block">
+                  Input Text
+                </label>
+                <div className="border-2 border-black bg-white p-4">
+                  <textarea
+                    rows={8}
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    placeholder="Paste your text here..."
+                    className="w-full font-mono text-base text-black placeholder-black/40 bg-transparent border-none outline-none resize-none"
+                    required
+                    minLength={10}
+                    disabled={summarizeMutation.isPending}
+                  />
+                </div>
+                {content.length > 0 && content.length < 10 && (
+                  <p className="font-mono text-xs text-red-600 mt-2">
+                    Text must be at least 10 characters long ({content.length}/10)
+                  </p>
+                )}
+              </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <label className="font-mono text-sm font-bold uppercase tracking-wider text-black mb-3 block">
-                Summary Length
-              </label>
-              <select
-                value={summaryLength}
-                onChange={(e) => setSummaryLength(e.target.value)}
-                className="w-full border-2 border-black bg-white p-4 font-mono text-base text-black"
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="font-mono text-sm font-bold uppercase tracking-wider text-black mb-3 block">
+                    Summary Length
+                  </label>
+                  <select
+                    value={summaryLength}
+                    onChange={(e) => setSummaryLength(e.target.value)}
+                    className="w-full border-2 border-black bg-white p-4 font-mono text-base text-black"
+                    disabled={summarizeMutation.isPending}
+                  >
+                    <option value="short">Short</option>
+                    <option value="medium">Medium</option>
+                    <option value="long">Long</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="font-mono text-sm font-bold uppercase tracking-wider text-black mb-3 block">
+                    Language
+                  </label>
+                  <select
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)}
+                    className="w-full border-2 border-black bg-white p-4 font-mono text-base text-black"
+                    disabled={summarizeMutation.isPending}
+                  >
+                    <option>English</option>
+                    <option>Turkish</option>
+                    <option>Spanish</option>
+                    <option>French</option>
+                    <option>German</option>
+                  </select>
+                </div>
+              </div>
+
+              {summarizeMutation.isError && (
+                <p className="font-mono text-xs text-red-600">
+                  Failed to generate summary. Please try again.
+                </p>
+              )}
+
+              <button
+                type="submit"
+                className="w-full border-2 border-black bg-black text-white font-mono text-sm font-bold uppercase tracking-wider py-4 hover:bg-white hover:text-black transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={summarizeMutation.isPending}
               >
-                <option value="short">Short</option>
-                <option value="medium">Medium</option>
-                <option value="long">Long</option>
-              </select>
-            </div>
-            <div>
-              <label className="font-mono text-sm font-bold uppercase tracking-wider text-black mb-3 block">
-                Language
-              </label>
-              <select
-                value={language}
-                onChange={(e) => setLanguage(e.target.value)}
-                className="w-full border-2 border-black bg-white p-4 font-mono text-base text-black"
-                disabled={summarizeMutation.isPending}
-              >
-                <option>English</option>
-                <option>Turkish</option>
-                <option>Spanish</option>
-                <option>French</option>
-                <option>German</option>
-              </select>
-            </div>
-          </div>
-
-          {summarizeMutation.isError && (
-            <p className="font-mono text-xs text-red-600">
-              Failed to generate summary. Please try again.
-            </p>
+                {summarizeMutation.isPending
+                  ? "Generating Summary..."
+                  : "Generate Summary →"}
+              </button>
+            </motion.form>
           )}
-
-          <button
-            type="submit"
-            className="w-full border-2 border-black bg-black text-white font-mono text-sm font-bold uppercase tracking-wider py-4 hover:bg-white hover:text-black transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={summarizeMutation.isPending}
-          >
-            {summarizeMutation.isPending
-              ? "Generating Summary..."
-              : "Generate Summary →"}
-          </button>
-        </form>
+        </AnimatePresence>
       </div>
 
       {/* Summary Result */}
@@ -193,6 +216,8 @@ export default function GenerateSummary() {
                 onClick={() => {
                   summarizeMutation.reset();
                   setContent("");
+                  setIsFormCollapsed(false);
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
                 }}
                 className="px-6 py-3 border-2 border-black bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-black hover:text-white transition-all"
               >

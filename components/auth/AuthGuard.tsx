@@ -27,7 +27,7 @@ export default function AuthGuard({ children, redirectTo = "/" }: AuthGuardProps
         instance.defaults.headers['x-wallet-address'] = currentAccount.address;
         setIsLoading(false);
       }
-    }, 500);
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, [currentAccount, router, redirectTo]);
