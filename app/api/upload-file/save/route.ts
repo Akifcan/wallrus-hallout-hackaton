@@ -10,10 +10,10 @@ export async function POST(request: Request) {
       abortEarly: false,
     });
     const { url } = validatedData;
-
     const file = await axios.get(url, {
       responseType: "arraybuffer",
     });
+    console.log(file);
     const contentType =
       file.headers["content-type"] || "application/octet-stream";
 
@@ -26,6 +26,7 @@ export async function POST(request: Request) {
       blobId,
     });
   } catch (e) {
+    console.log(e);
     return NextResponse.json(
       { error: "Failed to upload to Walrus" },
       { status: 500 }
