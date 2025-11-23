@@ -12,17 +12,33 @@ interface AuthGuardProps {
 
 export default function AuthGuard({ children, redirectTo = "/" }: AuthGuardProps) {
   const [isLoading, setIsLoading] = useState(true);
+  const [checkedAuth, setCheckedAuth] = useState(false);
   const currentAccount = useCurrentAccount();
   const router = useRouter();
 
   useEffect(() => {
-    if (!currentAccount) {
-      router.push(redirectTo);
-    } else {
-      instance.defaults.headers['x-wallet-address'] = currentAccount.address
+    // Wait a bit for wallet to initialize
+    const timer = setTimeout(() => {
+      setCheckedAuth(true);
+
+      if (!currentAccount) {
+        router.push(redirectTo);
+      } else {
+        instance.defaults.headers['x-wallet-address'] = currentAccount.address;
+        setIsLoading(false);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [currentAccount, router, redirectTo]);
+
+  // Update headers when currentAccount changes
+  useEffect(() => {
+    if (currentAccount && checkedAuth) {
+      instance.defaults.headers['x-wallet-address'] = currentAccount.address;
       setIsLoading(false);
     }
-  }, [currentAccount, router, redirectTo]);
+  }, [currentAccount, checkedAuth]);
 
   if (isLoading || !currentAccount) {
     return (
