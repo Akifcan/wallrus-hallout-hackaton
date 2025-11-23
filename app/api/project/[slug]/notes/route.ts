@@ -6,7 +6,8 @@ async function getNotes(projectId: number) {
   const notes = await supabase
     .from("note")
     .select("*")
-    .eq("project_id", projectId);
+    .eq("project_id", projectId)
+    .not("blob_id", "is", null);
 
   if (!notes.data || notes.data.length === 0) {
     return [];

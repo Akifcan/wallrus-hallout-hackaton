@@ -6,7 +6,8 @@ async function getSummaries(projectId: number) {
   const summaries = await supabase
     .from("summary")
     .select("*")
-    .eq("project_id", projectId);
+    .eq("project_id", projectId)
+    .not("blob_id", "is", null);
 
   if (!summaries.data || summaries.data.length === 0) {
     return [];

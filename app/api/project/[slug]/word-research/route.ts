@@ -6,7 +6,8 @@ async function getWordResearch(projectId: number) {
   const wordResearch = await supabase
     .from("word_research")
     .select("*")
-    .eq("project_id", projectId);
+    .eq("project_id", projectId)
+    .not("blob_id", "is", null);
 
   if (!wordResearch.data || wordResearch.data.length === 0) {
     return [];
@@ -28,8 +29,7 @@ async function getWordResearch(projectId: number) {
         const content = JSON.parse(jsonString);
 
         return {
-          ...research,
-          content,
+          content: content.results,
         };
       } catch (error) {
         console.error(`Error fetching blob ${research.blob_id}:`, error);
