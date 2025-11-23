@@ -6,6 +6,7 @@ import NewFolderDialog from "./NewFolderDialog";
 import { useQuery } from "@tanstack/react-query";
 import { useCurrentAccount } from "@mysten/dapp-kit";
 import instance from "@/lib/api";
+import Link from "next/link";
 
 export default function FoldersProjects() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -78,29 +79,28 @@ export default function FoldersProjects() {
                     transition={{ delay: idx * 0.1 }}
                     className="border-2 border-black bg-white p-6 hover:bg-black hover:text-white transition-all cursor-pointer group"
                   >
-                    <div className="flex items-start justify-between mb-4">
-                      <div
-                        className={`w-12 h-12 border-2 border-black ${color} group-hover:bg-white group-hover:border-white flex items-center justify-center`}
-                      >
-                        <span
-                          className={`font-mono text-lg font-black ${color === "bg-black" ? "text-white" : "text-black"
-                            } group-hover:text-black`}
+                    <Link href={`/project/${project.slug}`}>
+                      <div className="flex items-start justify-between mb-4">
+                        <div
+                          className={`w-12 h-12 border-2 border-black ${color} group-hover:bg-white group-hover:border-white flex items-center justify-center`}
                         >
-                          📁
-                        </span>
+                          <span
+                            className={`font-mono text-lg font-black ${color === "bg-black" ? "text-white" : "text-black"
+                              } group-hover:text-black`}
+                          >
+                            📁
+                          </span>
+                        </div>
+                        <div className="flex gap-1">
+                          <div className="w-2 h-2 border border-black bg-black group-hover:bg-white" />
+                          <div className="w-2 h-2 border border-black bg-white group-hover:bg-black" />
+                        </div>
                       </div>
-                      <div className="flex gap-1">
-                        <div className="w-2 h-2 border border-black bg-black group-hover:bg-white" />
-                        <div className="w-2 h-2 border border-black bg-white group-hover:bg-black" />
-                      </div>
-                    </div>
-                    <h3 className="font-mono text-lg font-bold uppercase tracking-wider mb-2">
-                      {project.title}
-                    </h3>
-                    <div className="h-1 w-12 bg-black group-hover:bg-white mb-4" />
-                    <p className="font-mono text-sm text-black/60 group-hover:text-white/80">
-                      0 items
-                    </p>
+                      <h3 className="font-mono text-lg font-bold uppercase tracking-wider mb-2">
+                        {project.title}
+                      </h3>
+                      <div className="h-1 w-12 bg-black group-hover:bg-white mb-4" />
+                    </Link>
                   </motion.div>
                 );
               })}

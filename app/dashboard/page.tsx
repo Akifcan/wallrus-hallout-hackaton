@@ -10,7 +10,7 @@ import LastCreatedProjects from "@/components/dashboard/LastCreatedProjects";
 import DashboardLayout from "@/components/layouts/dashboard-layout";
 
 export default function DashboardPage() {
-  const [activeTab, setActiveTab] = useState("search");
+  const [activeTab, setActiveTab] = useState("folders");
   const [isProjectsOpen, setIsProjectsOpen] = useState(true);
 
   return (

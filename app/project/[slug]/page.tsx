@@ -81,9 +81,6 @@ export default function Project() {
   return (
     <DashboardLayout title="Project Archive">
       <div className="space-y-8">
-        {/* Project Header */}
-        <ProjectHeader project={mockProject} />
-
         {/* Inline File Detail or File List */}
         <AnimatePresence mode="wait">
           {selectedFile ? (
