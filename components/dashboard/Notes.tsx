@@ -6,6 +6,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useCurrentAccount } from "@mysten/dapp-kit";
 import instance from "@/lib/api";
 import { toast } from "sonner";
+import Hint from "@/components/ui/Hint";
 
 export default function Notes() {
   const [title, setTitle] = useState("");
@@ -72,6 +73,18 @@ export default function Notes() {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-8"
     >
+      <Hint
+        title="How to use Notes"
+        description="Create and organize your research notes within projects. Notes help you capture important information, ideas, and findings during your research process. Each note is saved to your selected project for easy organization."
+        tips={[
+          "Give your notes descriptive titles for easy retrieval later",
+          "Organize notes by assigning them to specific projects",
+          "Note titles must be between 2-200 characters",
+          "Note content can be up to 10,000 characters long",
+          "Use the Clear button to quickly reset the form",
+        ]}
+      />
+
       {/* Create New Note */}
       <div className="border-2 border-black bg-white p-8">
         <div className="flex items-center justify-between mb-6">

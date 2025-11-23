@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import instance from "@/lib/api";
 import { toast } from "sonner";
+import Hint from "@/components/ui/Hint";
 
 export default function GenerateSummary() {
   const [content, setContent] = useState("");
@@ -46,6 +47,18 @@ export default function GenerateSummary() {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-8"
     >
+      <Hint
+        title="How to use Generate Summary"
+        description="Generate Summary uses AI to create concise summaries of your text content. Simply paste your text, choose the desired summary length and output language, and let the AI do the work."
+        tips={[
+          "Short summaries are best for quick overviews (2-3 sentences)",
+          "Medium summaries provide balanced detail (4-6 sentences)",
+          "Long summaries include more comprehensive information",
+          "You can summarize in different languages - the AI will translate and summarize",
+          "Minimum text length is 10 characters, maximum is 10,000 characters",
+        ]}
+      />
+
       <div className="border-2 border-black bg-white p-8">
         <div className="flex items-center justify-between mb-6">
           <h2 className="font-mono text-xl font-bold uppercase tracking-wider text-black">

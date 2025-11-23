@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import WordResearchForm from "./WordResearchForm";
 import WordResearchResults from "./WordResearchResults";
+import Hint from "@/components/ui/Hint";
 
 export default function WordResearch() {
   const [searchData, setSearchData] = useState<WordResearchResult[] | null>(
@@ -27,6 +28,17 @@ export default function WordResearch() {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-8"
     >
+      <Hint
+        title="How to use Word Research"
+        description="Word Research helps you find specific information across the web using advanced search techniques. You can search with just keywords, or narrow results by searching within a specific website."
+        tips={[
+          "Use specific keywords for better results (e.g., 'machine learning tutorial' instead of 'AI')",
+          "Enable 'Search in specific site' to limit results to a particular domain",
+          "Combine multiple keywords to narrow down your search",
+          "Results are automatically saved to Walrus decentralized storage",
+        ]}
+      />
+
       <AnimatePresence mode="wait">
         {showForm ? (
           <motion.div
