@@ -1,10 +1,7 @@
 import * as yup from "yup";
 
 export const searchSchema = yup.object({
-  site: yup
-    .string()
-    .required("Site is required")
-    .url("Site must be a valid URL"),
+  site: yup.string().url("Site must be a valid URL").optional(),
   keyword: yup
     .string()
     .required("Keyword is required")
@@ -58,4 +55,23 @@ export const noteSchema = yup.object({
     .min(1, "Content is required")
     .max(10000, "Content must not exceed 10000 characters"),
   project_id: yup.string().required("Project is required"),
+});
+
+export const wordResearchSchema = yup.object({
+  site: yup
+    .string()
+    .required("Site is required")
+    .url("Site must be a valid URL"),
+  keyword: yup
+    .string()
+    .required("Keyword is required")
+    .min(2, "Keyword must be at least 2 characters")
+    .max(200, "Keyword must not exceed 200 characters"),
+  project_id: yup.string().required("Project is required"),
+});
+
+export const saveWordResearchSchema = yup.object({
+  blob_id: yup.string().required("Blob ID is required"),
+  project_id: yup.string().required("Project is required"),
+  results: yup.object().required("Results are required"),
 });

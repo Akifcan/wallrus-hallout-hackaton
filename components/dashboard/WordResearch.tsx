@@ -1,46 +1,64 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import WordResearchForm from "./WordResearchForm";
+import WordResearchResults from "./WordResearchResults";
 
 export default function WordResearch() {
+  const [searchData, setSearchData] = useState<WordResearchResult[] | null>(
+    null
+  );
+  const [showForm, setShowForm] = useState(true);
+
+  const handleSearchComplete = (data: WordResearchResponse) => {
+    setSearchData(data.results.results);
+    setShowForm(false);
+  };
+
+  const handleNewSearch = () => {
+    setShowForm(true);
+    setSearchData(null);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className="space-y-8"
     >
-      <div className="border-2 border-black bg-white p-8">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="font-mono text-xl font-bold uppercase tracking-wider text-black">
-            Word Research
-          </h2>
-          <div className="w-6 h-6 border-2 border-black bg-black" />
-        </div>
-        <div className="h-1 w-16 bg-black mb-6" />
-
-        <div className="space-y-6">
-          <div>
-            <label className="font-mono text-sm font-bold uppercase tracking-wider text-black mb-3 block">
-              Search Query
-            </label>
-            <div className="border-2 border-black bg-white p-4">
-              <input
-                type="text"
-                placeholder="Enter your research query..."
-                className="w-full font-mono text-base text-black placeholder-black/40 bg-transparent border-none outline-none"
-              />
-            </div>
-          </div>
-
-          <Link
-            href="/dashboard/results"
-            className="w-full border-2 border-black bg-black text-white font-mono text-sm font-bold uppercase tracking-wider py-4 hover:bg-white hover:text-black transition-all block text-center"
+      <AnimatePresence mode="wait">
+        {showForm ? (
+          <motion.div
+            key="form"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
           >
-            Start Research →
-          </Link>
-        </div>
-      </div>
+            <WordResearchForm onSearchComplete={handleSearchComplete} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="results"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.3 }}
+            className="space-y-8"
+          >
+            <div className="border-2 border-black bg-white p-4">
+              <button
+                onClick={handleNewSearch}
+                className="w-full border-2 border-black bg-white text-black font-mono text-sm font-bold uppercase tracking-wider py-3 hover:bg-black hover:text-white transition-all flex items-center justify-center gap-2"
+              >
+                ← New Search
+              </button>
+            </div>
+            {searchData && <WordResearchResults results={searchData} />}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Recent Searches */}
       <div className="border-2 border-black bg-white p-8">
@@ -59,7 +77,9 @@ export default function WordResearch() {
               >
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-sm font-bold">{search}</span>
-                  <span className="font-mono text-xs text-black/60">2 days ago</span>
+                  <span className="font-mono text-xs text-black/60">
+                    2 days ago
+                  </span>
                 </div>
               </div>
             )
