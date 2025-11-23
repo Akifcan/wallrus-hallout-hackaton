@@ -6,6 +6,9 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { newspaperVertexShader, newspaperFragmentShader } from "./shaders";
+import { useQuery } from "@tanstack/react-query";
+import instance from "@/lib/api";
+import Link from "next/link";
 
 interface NewspaperPlaneProps {
   position?: [number, number, number];
@@ -141,6 +144,16 @@ function BackgroundGrid() {
 }
 
 export default function ResearchHero() {
+  const { data: publicationsData } = useQuery({
+    queryKey: ["latest-publication"],
+    queryFn: async () => {
+      const response = await instance.get("/api/publications");
+      return response.data;
+    },
+  });
+
+  const latestPublication = publicationsData?.publications?.[0] || null;
+
   return (
     <div className="relative w-full min-h-screen bg-[#f5f5f3] pt-28">
       {/* 3D Canvas Background */}
@@ -218,80 +231,100 @@ export default function ResearchHero() {
 
           {/* Right Column - Research Paper Preview */}
           <div className="lg:sticky lg:top-32">
-            <div className="border-2 border-black bg-white p-8 space-y-6">
-              {/* Header */}
-              <div className="flex items-center justify-between border-b-2 border-black pb-4">
-                <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-black">
-                  Recent Discovery
-                </h3>
-                <div className="w-4 h-4 border-2 border-black bg-black" />
-              </div>
-
-              {/* Paper Preview */}
-              <div className="space-y-4">
-                <div>
-                  <div className="font-serif text-lg font-bold text-black mb-2 leading-tight">
-                    AI-Powered Research Methodology: A Comprehensive Analysis
-                  </div>
-                  <div className="font-mono text-xs text-black/60 mb-3">
-                    Smith, J. et al. • Journal of Research Intelligence • 2025
-                  </div>
-                  <p className="font-mono text-xs text-black/70 leading-relaxed line-clamp-3">
-                    This paper presents a novel approach to academic research using
-                    artificial intelligence and blockchain technology. Our methodology
-                    demonstrates significant improvements in citation accuracy...
-                  </p>
+            {latestPublication ? (
+              <div className="border-2 border-black bg-white p-8 space-y-6">
+                {/* Header */}
+                <div className="flex items-center justify-between border-b-2 border-black pb-4">
+                  <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-black">
+                    Recent Discovery
+                  </h3>
+                  <div className="w-4 h-4 border-2 border-black bg-black" />
                 </div>
 
-                {/* Citation Preview */}
-                <div className="pt-4 border-t-2 border-black">
-                  <div className="font-mono text-[10px] text-black/60 uppercase tracking-wider mb-2">
-                    Citation (APA)
+                {/* Paper Preview */}
+                <div className="space-y-4">
+                  <div>
+                    <div className="font-serif text-lg font-bold text-black mb-2 leading-tight">
+                      {latestPublication.title}
+                    </div>
+                    <div className="font-mono text-xs text-black/60 mb-3">
+                      {latestPublication.contact_name || "Anonymous"} | Public Research
+                    </div>
                   </div>
-                  <div className="bg-black/5 p-3 border border-black/20">
-                    <p className="font-mono text-[10px] text-black/80 leading-relaxed">
-                      Smith, J., Doe, A., & Johnson, B. (2025). AI-powered research
-                      methodology: A comprehensive analysis.{" "}
-                      <span className="italic">Journal of Research Intelligence</span>,{" "}
-                      <span className="font-bold">1</span>(1), 45-67.
-                    </p>
-                  </div>
-                </div>
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {["AI", "Research", "Blockchain"].map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="px-2 py-1 border border-black bg-white font-mono text-[10px] text-black"
-                    >
-                      {tag}
+                  {/* Author Info */}
+                  <div className="pt-4 border-t-2 border-black">
+                    <div className="font-mono text-[10px] text-black/60 uppercase tracking-wider mb-2">
+                      Author Details
+                    </div>
+                    <div className="bg-black/5 p-3 border border-black/20 space-y-1">
+                      <p className="font-mono text-[10px] text-black/80">
+                        <span className="font-bold">Name:</span> {latestPublication.contact_name || "Anonymous"}
+                      </p>
+                      {latestPublication.contact_email && (
+                        <p className="font-mono text-[10px] text-black/80">
+                          <span className="font-bold">Email:</span> {latestPublication.contact_email}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    <span className="px-2 py-1 border border-black bg-black text-white font-mono text-[10px]">
+                      PUBLIC
                     </span>
-                  ))}
+                    <span className="px-2 py-1 border border-black bg-white font-mono text-[10px] text-black">
+                      {latestPublication.contact_name ? "VERIFIED" : "ANONYMOUS"}
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              {/* Action */}
-              <div className="pt-6 border-t-2 border-black">
-                <button className="w-full border-2 border-black bg-black text-white font-mono text-xs font-bold uppercase tracking-wider py-3 hover:bg-white hover:text-black transition-all duration-200">
-                  View Full Paper →
-                </button>
-              </div>
+                {/* Action */}
+                <div className="pt-6 border-t-2 border-black">
+                  <Link
+                    href={`/publishments/${latestPublication.slug}`}
+                    className="block w-full text-center border-2 border-black bg-black text-white font-mono text-xs font-bold uppercase tracking-wider py-3 hover:bg-white hover:text-black transition-all duration-200"
+                  >
+                    View Full Paper
+                  </Link>
+                </div>
 
-              {/* Footer */}
-              <div className="pt-4 border-t-2 border-black">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] text-black/50 uppercase tracking-wider">
-                    From Library
-                  </span>
-                  <div className="flex gap-1">
-                    <div className="w-1.5 h-1.5 bg-black" />
-                    <div className="w-1.5 h-1.5 bg-black/40" />
-                    <div className="w-1.5 h-1.5 bg-black/20" />
+                {/* Footer */}
+                <div className="pt-4 border-t-2 border-black">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[10px] text-black/50 uppercase tracking-wider">
+                      From Library
+                    </span>
+                    <div className="flex gap-1">
+                      <div className="w-1.5 h-1.5 bg-black" />
+                      <div className="w-1.5 h-1.5 bg-black/40" />
+                      <div className="w-1.5 h-1.5 bg-black/20" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="border-2 border-black bg-white p-8 space-y-6">
+                <div className="flex items-center justify-between border-b-2 border-black pb-4">
+                  <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-black">
+                    Recent Discovery
+                  </h3>
+                  <div className="w-4 h-4 border-2 border-black bg-black" />
+                </div>
+                <div className="text-center py-8">
+                  <p className="font-mono text-sm text-black/60">
+                    No public research available yet.
+                  </p>
+                  <Link
+                    href="/publishments"
+                    className="inline-block mt-4 border-2 border-black bg-black text-white font-mono text-xs font-bold uppercase tracking-wider px-6 py-2 hover:bg-white hover:text-black transition-all"
+                  >
+                    Browse Archive
+                  </Link>
+                </div>
+              </div>
+            )}
 
             {/* Decorative Elements */}
             <div className="mt-6 flex gap-4">
