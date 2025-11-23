@@ -1,34 +1,43 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import instance from "@/lib/api";
 import { toast } from "sonner";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Switch } from "../ui/switch";
 
 export default function ProjectPublicToggle({ defaultStatus }: { defaultStatus: boolean }) {
   const params = useParams();
   const slug = params.slug as string;
   const [isActive, setActive] = useState(defaultStatus)
-  console.log(defaultStatus)
 
   const mutation = useMutation({
     mutationFn: (value: boolean) => {
+      console.log(value)
       return instance.put(`/api/project/${slug}/toggle-public`, { is_public: value })
     },
     onSuccess: (data: any) => {
-      setActive(prev => !prev)
-      toast.success(data.data.project.is_public ? 'This research is public now' : 'This research is private now')
+      toast.success(isActive ? 'This research is public now' : 'This research is private now')
     },
-    onError: (e) => {
-      toast.success('Unexecpted error occured')
+    onError: () => {
+      toast.error('Unexpected error occurred')
     }
   })
 
   const handleChange = (checked: boolean) => {
+    setActive(checked)
     mutation.mutate(checked)
   }
 
   return (
-    <Switch checked={isActive} onCheckedChange={handleChange}>Project publish status</Switch>
+    <div className="flex items-center gap-4">
+      <Switch checked={isActive} onCheckedChange={handleChange}>Project publish status</Switch>
+      <div className={`font-mono text-xs font-bold uppercase tracking-wider border-4 px-6 py-3 transition-colors ${
+        isActive
+          ? 'border-green-600 bg-green-600 text-white'
+          : 'border-gray-600 bg-gray-600 text-white'
+      }`}>
+        {isActive ? 'Research is Public • Everyone can view' : 'Research is Private • Only you can view'}
+      </div>
+    </div>
   );
 }

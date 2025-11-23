@@ -41,7 +41,7 @@ export default function Project() {
             EDIT RESEARCH META
           </button>
 
-          {projectData && <ProjectPublicToggle defaultStatus={projectData?.project?.is_public} />}
+          {projectData?.project && <ProjectPublicToggle defaultStatus={projectData?.project?.is_public === 'true' ? true : false} />}
         </div>
 
         <ProjectSummaries />
