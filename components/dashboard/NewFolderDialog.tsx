@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import {
   Dialog,
@@ -9,6 +8,8 @@ import {
 } from "@/components/ui/dialog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCurrentAccount } from "@mysten/dapp-kit";
+import instance from "@/lib/api";
+import { toast } from "sonner";
 
 interface NewFolderDialogProps {
   open: boolean;
@@ -25,27 +26,21 @@ export default function NewFolderDialog({
 
   const createFolderMutation = useMutation({
     mutationFn: async (projectName: string) => {
-      const response = await fetch("/api/create-folder", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-wallet-address": currentAccount?.address || "",
-        },
-        body: JSON.stringify({ projectName }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create project");
-      }
-
-      return response.json();
+      const response = await instance.post('/api/create-folder', {
+        projectName
+      })
+      return response.data
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toast.success("Project created successfully!");
       setProjectName("");
       onOpenChange(false);
       queryClient.invalidateQueries({
         queryKey: ["projects", currentAccount?.address],
       });
+    },
+    onError: (error) => {
+      toast.error("Failed to create project. Please try again.");
     },
   });
 
