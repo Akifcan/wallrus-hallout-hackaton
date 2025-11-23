@@ -6,6 +6,9 @@ import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import instance from "@/lib/api";
 import { motion } from "framer-motion";
+import PublicSummaries from "@/components/publishments/PublicSummaries";
+import PublicNotes from "@/components/publishments/PublicNotes";
+import PublicWordResearch from "@/components/publishments/PublicWordResearch";
 
 interface Publication {
   title: string;
@@ -154,21 +157,11 @@ export default function PublicationDetail() {
               </div>
             </div>
 
-            {/* Content Placeholder */}
-            <div className="border-4 border-black bg-white p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 border-2 border-black bg-black flex items-center justify-center">
-                  <span className="text-lg text-white">+</span>
-                </div>
-                <h2 className="font-mono text-lg font-bold uppercase tracking-wider text-black">
-                  Research Content
-                </h2>
-              </div>
-              <div className="border-2 border-dashed border-black/30 p-8 text-center">
-                <p className="font-mono text-sm text-black/60">
-                  Research summaries, notes, and word research will be displayed here.
-                </p>
-              </div>
+            {/* Research Content */}
+            <div className="border-4 border-black bg-white p-6 space-y-8">
+              <PublicSummaries slug={slug} />
+              <PublicNotes slug={slug} />
+              <PublicWordResearch slug={slug} />
             </div>
           </motion.div>
         )}
