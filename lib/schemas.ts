@@ -9,6 +9,16 @@ export const searchSchema = yup.object({
     .max(200, "Keyword must not exceed 200 characters"),
 });
 
+export const fileSearchSchema = yup.object({
+  site: yup.string().url("Site must be a valid URL").optional(),
+  keyword: yup
+    .string()
+    .required("Keyword is required")
+    .min(2, "Keyword must be at least 2 characters")
+    .max(200, "Keyword must not exceed 200 characters"),
+  type: yup.string().max(5, "type must not exceed 5 characters"),
+});
+
 export const uploadSchema = yup.object({
   url: yup.string().required("URL is required").url("URL must be a valid URL"),
 });
