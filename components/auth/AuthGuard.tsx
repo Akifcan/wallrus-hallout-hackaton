@@ -36,7 +36,8 @@ export default function AuthGuard({ children, redirectTo = "/" }: AuthGuardProps
   useEffect(() => {
     if (currentAccount && checkedAuth) {
       instance.defaults.headers['x-wallet-address'] = currentAccount.address;
-      setIsLoading(false);
+      // Use setTimeout to avoid synchronous setState
+      setTimeout(() => setIsLoading(false), 0);
     }
   }, [currentAccount, checkedAuth]);
 

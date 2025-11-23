@@ -1,7 +1,6 @@
 "use client";
 
 import { use } from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import ResearchHeader from "@/components/research/ResearchHeader";
 import ResearchFooter from "@/components/research/ResearchFooter";
@@ -11,7 +10,8 @@ export default function ArticleDetailPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = use(params);
+  // Using params but slug is not needed in this mock implementation
+  use(params);
 
   // Mock article data - in real app, fetch by slug
   const article = {

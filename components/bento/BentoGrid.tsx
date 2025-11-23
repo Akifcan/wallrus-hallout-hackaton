@@ -8,7 +8,7 @@ import { useInView } from "framer-motion";
 interface BentoCardProps {
   title: string;
   description: string;
-  icon: React.ElementType;
+  icon: React.ComponentType<{ className?: string }>;
   gradient: string;
   size: "small" | "medium" | "large";
   index: number;

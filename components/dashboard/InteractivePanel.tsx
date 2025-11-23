@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Search, Sparkles, Database, Brain, Lock, Zap } from "lucide-react";
 
 interface PanelData {
-  icon: React.ElementType;
+  icon: React.ComponentType<{ className?: string }>;
   title: string;
   subtitle: string;
   metrics: Array<{ label: string; value: string }>;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, PerspectiveCamera } from "@react-three/drei";
 import * as THREE from "three";
@@ -60,6 +60,10 @@ function DeskScene({ activeSection, onSectionChange }: { activeSection: number; 
     { position: [0, 0.5, -1.5], rotation: [0, 0, 0] },
   ] as const;
 
+  const particlesArray = useMemo(() => new Float32Array(
+    Array.from({ length: 300 }, () => (Math.random() - 0.5) * 10)
+  ), []);
+
   return (
     <>
       <color attach="background" args={["#f8fafc"]} />
@@ -81,8 +85,8 @@ function DeskScene({ activeSection, onSectionChange }: { activeSection: number; 
       {papers.map((paper, i) => (
         <FloatingPaper
           key={i}
-          position={paper.position}
-          rotation={paper.rotation}
+          position={paper.position as any}
+          rotation={paper.rotation as any}
           index={i}
           onClick={() => onSectionChange(i)}
           isActive={activeSection === i}
@@ -95,11 +99,8 @@ function DeskScene({ activeSection, onSectionChange }: { activeSection: number; 
           <bufferAttribute
             attach="attributes-position"
             count={100}
-            array={new Float32Array(
-              Array.from({ length: 300 }, () => (Math.random() - 0.5) * 10)
-            )}
-            itemSize={3}
-          />
+            array={particlesArray}
+            itemSize={3} args={[] as any}          />
         </bufferGeometry>
         <pointsMaterial size={0.02} color="#cbd5e1" transparent opacity={0.3} />
       </points>

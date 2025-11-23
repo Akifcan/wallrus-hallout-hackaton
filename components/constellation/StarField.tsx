@@ -35,18 +35,23 @@ export default function StarField({ constellationStars, activeStarId, onStarClic
 
   // Generate random background stars
   useEffect(() => {
-    const stars: Star[] = [];
-    for (let i = 0; i < 200; i++) {
-      stars.push({
-        id: i,
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        size: Math.random() * 2,
-        brightness: Math.random(),
-        twinkleSpeed: 0.5 + Math.random() * 2,
-      });
-    }
-    setBackgroundStars(stars);
+    const initStars = () => {
+      const stars: Star[] = [];
+      for (let i = 0; i < 200; i++) {
+        stars.push({
+          id: i,
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          size: Math.random() * 2,
+          brightness: Math.random(),
+          twinkleSpeed: 0.5 + Math.random() * 2,
+        });
+      }
+      setBackgroundStars(stars);
+    };
+
+    // Use setTimeout to avoid synchronous setState
+    setTimeout(initStars, 0);
   }, []);
 
   // Animate background stars
@@ -116,8 +121,13 @@ export default function StarField({ constellationStars, activeStarId, onStarClic
   };
 
   useEffect(() => {
-    const nearest = getNearestStar(mousePos.x, mousePos.y);
-    setHoveredStar(nearest);
+    const updateHoveredStar = () => {
+      const nearest = getNearestStar(mousePos.x, mousePos.y);
+      setHoveredStar(nearest);
+    };
+
+    // Use setTimeout to avoid synchronous setState
+    setTimeout(updateHoveredStar, 0);
   }, [mousePos, constellationStars]);
 
   return (

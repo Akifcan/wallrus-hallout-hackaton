@@ -9,13 +9,10 @@ import { walrusNetworkVertexShader, walrusNetworkFragmentShader } from "./shader
 function WalrusNetworkPlane() {
   const meshRef = useRef<THREE.Mesh>(null);
 
-  const uniforms = useMemo(
-    () => ({
-      uTime: { value: 0 },
-      uNodeCount: { value: 10247 },
-    }),
-    []
-  );
+  const uniforms = useMemo(() => ({
+    uTime: { value: 0 },
+    uNodeCount: { value: 10247 },
+  }), []);
 
   useFrame((state) => {
     if (meshRef.current) {
@@ -52,7 +49,7 @@ function NetworkNodes() {
       });
     }
     return pos;
-  }, []);
+  }, [count]);
 
   useFrame((state) => {
     if (groupRef.current) {
