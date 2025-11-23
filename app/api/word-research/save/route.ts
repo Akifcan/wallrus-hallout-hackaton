@@ -19,10 +19,35 @@ export async function POST(request: Request) {
       );
     }
 
-    const { results, project_id } = validatedData;
+    const { word_research_id, project_id } = validatedData;
 
-    // Convert results to JSON string and then to Buffer
-    const jsonString = JSON.stringify(results, null, 2);
+    // Get word research from database
+    const { data: researchData, error: fetchError } = await supabase
+      .from("word_research")
+      .select("results")
+      .eq("id", word_research_id)
+      .eq("wallet", wallet)
+      .single();
+
+    if (fetchError || !researchData) {
+      console.error("Fetch error:", fetchError);
+      return NextResponse.json(
+        { error: "Word research not found" },
+        { status: 404 }
+      );
+    }
+
+    // Parse results from JSON string
+    const results = JSON.parse(researchData.results);
+
+    // Create JSON object to upload to Walrus
+    const researchObject = {
+      results,
+      created_at: new Date().toISOString(),
+    };
+
+    // Convert to JSON string and then to Buffer
+    const jsonString = JSON.stringify(researchObject, null, 2);
     const buffer = Buffer.from(jsonString, "utf-8");
 
     // Upload JSON file to Walrus
@@ -32,10 +57,12 @@ export async function POST(request: Request) {
       throw new Error("Failed to upload results to Walrus");
     }
 
-    // Save to database
+    // Update word research with blob_id and project_id
     const { data, error } = await supabase
       .from("word_research")
-      .insert([{ wallet, blob_id: blobId, project_id }])
+      .update({ blob_id: blobId, project_id })
+      .eq("id", word_research_id)
+      .eq("wallet", wallet)
       .select();
 
     if (error) {

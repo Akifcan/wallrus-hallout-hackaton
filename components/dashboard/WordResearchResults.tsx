@@ -8,10 +8,12 @@ import { toast } from "sonner";
 
 interface WordResearchResultsProps {
   results: WordResearchResult[];
+  researchId: string;
 }
 
 export default function WordResearchResults({
   results,
+  researchId,
 }: WordResearchResultsProps) {
   const [projectId, setProjectId] = useState("");
   const currentAccount = useCurrentAccount();
@@ -58,10 +60,7 @@ export default function WordResearchResults({
     }
 
     saveMutation.mutate({
-      results: {
-        results,
-        count: results.length,
-      },
+      word_research_id: researchId,
       project_id: projectId,
     });
   };

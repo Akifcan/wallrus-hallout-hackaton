@@ -10,13 +10,11 @@ interface WordResearchResponse {
     results: WordResearchResult[];
     count: number;
   };
+  researchId: string;
 }
 
 interface SaveWordResearchRequest {
-  results: {
-    results: WordResearchResult[];
-    count: number;
-  };
+  word_research_id: string;
   project_id: string;
 }
 

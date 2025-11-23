@@ -7,13 +7,17 @@ import WordResearchResults from "./WordResearchResults";
 import Hint from "@/components/ui/Hint";
 
 export default function WordResearch() {
-  const [searchData, setSearchData] = useState<WordResearchResult[] | null>(
-    null
-  );
+  const [searchData, setSearchData] = useState<{
+    results: WordResearchResult[];
+    researchId: string;
+  } | null>(null);
   const [showForm, setShowForm] = useState(true);
 
   const handleSearchComplete = (data: WordResearchResponse) => {
-    setSearchData(data.results.results);
+    setSearchData({
+      results: data.results.results,
+      researchId: data.researchId,
+    });
     setShowForm(false);
   };
 
@@ -67,7 +71,12 @@ export default function WordResearch() {
                 ← New Search
               </button>
             </div>
-            {searchData && <WordResearchResults results={searchData} />}
+            {searchData && (
+              <WordResearchResults
+                results={searchData.results}
+                researchId={searchData.researchId}
+              />
+            )}
           </motion.div>
         )}
       </AnimatePresence>
