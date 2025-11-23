@@ -3,10 +3,14 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Connect from "./Connect";
+import { useCurrentAccount } from "@mysten/dapp-kit";
+import Link from "next/link";
 
 export default function ResearchHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const currentAccount = useCurrentAccount();
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,7 +48,7 @@ export default function ResearchHeader() {
               <div className="absolute -top-1 -right-1 w-4 h-4 bg-black rounded-full" />
             </div>
             <div>
-              <div className="font-serif text-3xl font-black text-black leading-none mb-1">
+              <div className="font-serif md:text-3xl font-black text-black leading-none mb-1">
                 DOCSCOUT
               </div>
               <div className="flex items-center gap-2">
@@ -58,29 +62,55 @@ export default function ResearchHeader() {
 
           {/* Center Navigation - Horizontal line style */}
           <nav className="hidden xl:flex items-center gap-12">
-            {navItems.map((item, index) => (
-              <motion.a
-                key={item}
-                href={`#${item.toLowerCase()}`}
+            {currentAccount ?
+              <motion.div
                 className="relative group"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: 1 * 0.1 }}
               >
-                <div className="flex items-center gap-3">
+                <Link href={'/dashboard'} className="flex items-center gap-3">
                   <div className="w-2 h-2 border-2 border-black bg-white group-hover:bg-black transition-colors" />
                   <span className="font-mono text-sm font-bold uppercase tracking-[0.15em] text-black">
-                    {item}
+                    Home
                   </span>
-                </div>
+                </Link>
                 <motion.div
                   className="absolute -bottom-2 left-0 h-[3px] bg-black"
                   initial={{ width: 0 }}
                   whileHover={{ width: "100%" }}
                   transition={{ duration: 0.3 }}
                 />
-              </motion.a>
-            ))}
+              </motion.div>
+              : <motion.a
+                href={`#features`}
+                className="relative group"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1 * 0.1 }}
+              >
+                {currentAccount ?
+                  <Link href={'/dashboard'} className="flex items-center gap-3">
+                    <div className="w-2 h-2 border-2 border-black bg-white group-hover:bg-black transition-colors" />
+                    <span className="font-mono text-sm font-bold uppercase tracking-[0.15em] text-black">
+                      Home
+                    </span>
+                  </Link>
+                  : <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 border-2 border-black bg-white group-hover:bg-black transition-colors" />
+                    <span className="font-mono text-sm font-bold uppercase tracking-[0.15em] text-black">
+                      Features
+                    </span>
+                  </div>}
+
+                <motion.div
+                  className="absolute -bottom-2 left-0 h-[3px] bg-black"
+                  initial={{ width: 0 }}
+                  whileHover={{ width: "100%" }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.a>}
+
           </nav>
 
           {/* Right side - CTA */}
@@ -122,20 +152,28 @@ export default function ResearchHeader() {
             className="xl:hidden bg-[#f5f5f3] border-t-2 border-black overflow-hidden"
           >
             <nav className="px-8 py-8 flex flex-col gap-6">
-              {navItems.map((item, index) => (
-                <motion.a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className="flex items-center gap-4 font-mono text-base font-bold uppercase tracking-wider text-black border-b-2 border-black/20 pb-4"
-                  onClick={() => setMenuOpen(false)}
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: index * 0.1 }}
-                >
+              {currentAccount ? <motion.div
+                onClick={() => setMenuOpen(false)}
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 1 * 0.1 }}
+              >
+                <Link href={'/dashboard'} className="flex items-center gap-4 font-mono text-base font-bold uppercase tracking-wider text-black border-b-2 border-black/20 pb-4">
                   <div className="w-3 h-3 border-2 border-black bg-white" />
-                  {item}
-                </motion.a>
-              ))}
+                  Home
+                </Link>
+              </motion.div> : <motion.a
+                href={`#features`}
+                className="flex items-center gap-4 font-mono text-base font-bold uppercase tracking-wider text-black border-b-2 border-black/20 pb-4"
+                onClick={() => setMenuOpen(false)}
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 1 * 0.1 }}
+              >
+                <div className="w-3 h-3 border-2 border-black bg-white" />
+                Features
+              </motion.a>}
+
             </nav>
           </motion.div>
         )}
