@@ -135,7 +135,7 @@ export default function Publishments() {
                   </div>
 
                   <Link
-                    href={`/project/${pub.slug}`}
+                    href={`/publishments/${pub.slug}`}
                     className="block w-full text-center border-2 border-black bg-black text-white font-mono text-xs font-bold uppercase tracking-wider px-4 py-2 hover:bg-white hover:text-black transition-all"
                   >
                     View →
