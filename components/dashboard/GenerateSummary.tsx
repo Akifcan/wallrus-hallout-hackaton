@@ -19,7 +19,7 @@ export default function GenerateSummary() {
       summaryLength: string;
       language: string;
     }) => {
-      const response = await instance.post("/api/summary", data);
+      const response = await instance.post("/api/summary/results", data);
       return response.data;
     },
     onSuccess: () => {
