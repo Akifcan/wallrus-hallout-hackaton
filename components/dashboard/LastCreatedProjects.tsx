@@ -4,9 +4,11 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { useCurrentAccount } from "@mysten/dapp-kit";
 import instance from "@/lib/api";
+import { useRouter } from "next/navigation";
 
 export default function LastCreatedProjects() {
   const currentAccount = useCurrentAccount();
+  const router = useRouter()
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["recent-projects", currentAccount?.address],
@@ -54,19 +56,10 @@ export default function LastCreatedProjects() {
 
   return (
     <div className="border-2 border-black bg-white p-3">
-      <div className="flex items-center gap-2 mb-3">
-        <div className="w-1.5 h-1.5 bg-black" />
-        <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-black">
-          Recent Projects
-        </h3>
-        <span className="font-mono text-[10px] text-black/60">
-          (Last {data.projects.length})
-        </span>
-      </div>
-
       <div className="flex gap-2 overflow-x-auto pb-1">
         {data.projects.map((project: any, idx: number) => (
           <motion.div
+            onClick={() => router.push(`/project/${project.slug}`)}
             key={project.id}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}

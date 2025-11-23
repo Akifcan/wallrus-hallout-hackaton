@@ -16,13 +16,27 @@ export default function Project() {
   const slug = params.slug as string;
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const { data: projectData } = useQuery({
+  const { data: projectData, isLoading } = useQuery({
     queryKey: ["project", slug],
     queryFn: async () => {
       const response = await instance.get(`/api/project/${slug}`);
       return response.data;
     },
   });
+
+  if (isLoading) {
+    return (
+      <DashboardLayout title="Project Archive">
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="text-center space-y-4">
+            <div className="w-16 h-16 border-4 border-black border-t-transparent animate-spin mx-auto" />
+            <p className="font-mono text-sm uppercase tracking-wider">Loading project...</p>
+          </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
   return (
     <DashboardLayout title="Project Archive">
       <div className="space-y-8">

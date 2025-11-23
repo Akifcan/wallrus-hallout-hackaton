@@ -103,6 +103,7 @@ export default function ResearchHeader() {
                     </span>
                   </div>}
 
+
                 <motion.div
                   className="absolute -bottom-2 left-0 h-[3px] bg-black"
                   initial={{ width: 0 }}
@@ -110,6 +111,17 @@ export default function ResearchHeader() {
                   transition={{ duration: 0.3 }}
                 />
               </motion.a>}
+
+
+              <Link href={'/publishments'}>
+                  
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 border-2 border-black bg-white group-hover:bg-black transition-colors" />
+                    <span className="font-mono text-sm font-bold uppercase tracking-[0.15em] text-black">
+                      Publishments
+                    </span>
+                  </div>
+                  </Link>
 
           </nav>
 
