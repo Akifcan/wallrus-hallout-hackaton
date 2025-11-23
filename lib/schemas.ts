@@ -37,3 +37,11 @@ export const summarySchema = yup.object({
       "Summary length must be short, medium, or long"
     ),
 });
+
+export const projectSchema = yup.object({
+  projectName: yup
+    .string()
+    .required("Project name is required")
+    .min(2, "Project name must be at least 2 characters")
+    .max(100, "Project name must not exceed 100 characters"),
+});
