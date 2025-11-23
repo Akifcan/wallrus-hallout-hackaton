@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { noteSchema } from "@/lib/schemas";
 import supabase from "@/lib/db";
+import upload from "@/lib/upload";
 
 export async function POST(request: Request) {
   try {
@@ -20,9 +21,28 @@ export async function POST(request: Request) {
 
     const { title, content, project_id } = validatedData;
 
+    // Create note object to upload to Walrus
+    const noteData = {
+      title,
+      content,
+      created_at: new Date().toISOString(),
+    };
+
+    // Convert to JSON string and then to Buffer
+    const jsonString = JSON.stringify(noteData, null, 2);
+    const buffer = Buffer.from(jsonString, "utf-8");
+
+    // Upload JSON file to Walrus
+    const blobId = await upload(buffer, "application/json");
+
+    if (!blobId) {
+      throw new Error("Failed to upload note to Walrus");
+    }
+
+    // Save to database with blob_id
     const { data, error } = await supabase
       .from("note")
-      .insert([{ title, content, project_id, wallet }])
+      .insert([{ blob_id: blobId, project_id, wallet }])
       .select();
 
     if (error) {
@@ -35,6 +55,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
+      blobId,
       note: data[0],
     });
   } catch (error) {
