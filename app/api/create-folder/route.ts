@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { projectSchema } from "@/lib/schemas";
 import supabase from "@/lib/db";
+import slugify from "slugify";
 
 export async function POST(request: Request) {
   try {
@@ -22,7 +23,7 @@ export async function POST(request: Request) {
 
     const { data, error } = await supabase
       .from("project")
-      .insert([{ title: projectName, wallet }])
+      .insert([{ title: projectName, wallet, slug: slugify(projectName) }])
       .select();
 
     if (error) {
