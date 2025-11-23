@@ -2,9 +2,10 @@
 import DashboardLayout from "@/components/layouts/dashboard-layout";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import instance from "@/lib/api";
+import Link from "next/link";
 
 const mockFiles = [
   {
@@ -50,6 +51,7 @@ const typeLabels: Record<string, string> = {
 
 export default function Project() {
   const params = useParams();
+  const router = useRouter();
   const slug = params.slug as string;
 
   const [expandedSummary, setExpandedSummary] = useState<number | null>(null);
@@ -110,6 +112,14 @@ export default function Project() {
   return (
     <DashboardLayout title="Project Archive">
       <div className="space-y-8">
+        {/* Back Button */}
+        <button
+          onClick={() => router.push("/dashboard")}
+          className="font-mono text-sm font-bold uppercase tracking-wider border-4 border-black bg-white px-6 py-3 hover:bg-black hover:text-white transition-colors flex items-center gap-2"
+        >
+          ← BACK TO DASHBOARD
+        </button>
+
         {/* Summaries Section */}
         <div className="space-y-4">
           <h2 className="font-mono text-2xl font-bold uppercase tracking-wider border-b-4 border-black pb-2">
@@ -281,33 +291,29 @@ export default function Project() {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
-                      className="pt-4 border-t-2 border-black/10 space-y-3"
+                      className="pt-4 border-t-2 border-black/10 space-y-3 flex flex-col gap-2"
                     >
                       {research.content?.results?.map((result: any, resultIndex: number) => (
-                        <div
-                          key={resultIndex}
-                          className="border-2 border-black/20 p-4 hover:border-black transition-colors"
-                        >
-                          <a
-                            href={result.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="font-mono text-sm font-bold text-black hover:underline"
+                        <Link href={result.link} target="_blank">
+                          <div
+                            key={resultIndex}
+                            className="border-2 border-black/20 p-4 hover:border-black transition-colors"
                           >
-                            {result.title}
-                          </a>
-                          <p className="font-mono text-xs text-black/60 mt-2">
-                            {result.snippet}
-                          </p>
-                          <a
-                            href={result.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="font-mono text-xs text-black/40 hover:text-black mt-1 inline-block break-all"
-                          >
-                            {result.link}
-                          </a>
-                        </div>
+                            <p
+                              className="font-mono text-sm font-bold text-black hover:underline"
+                            >
+                              {result.title}
+                            </p>
+                            <p className="font-mono text-xs text-black/60 mt-2">
+                              {result.snippet}
+                            </p>
+                            <p
+                              className="font-mono text-xs text-black/40 hover:text-black mt-1 inline-block break-all"
+                            >
+                              {result.link}
+                            </p>
+                          </div>
+                        </Link>
                       ))}
                     </motion.div>
                   )}
