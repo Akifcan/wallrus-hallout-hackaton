@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useCurrentAccount } from "@mysten/dapp-kit";
 import { toast } from "sonner";
-import axios from "axios";
 import instance from "@/lib/api";
 
 interface FileResearchResultsProps {
