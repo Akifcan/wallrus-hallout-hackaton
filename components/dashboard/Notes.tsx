@@ -1,38 +1,76 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { useCurrentAccount } from "@mysten/dapp-kit";
 
 export default function Notes() {
-  const notesData = [
-    {
-      title: "AI Research Ideas",
-      content: "Need to explore semantic search algorithms and their applications in academic research. Focus on precision and recall metrics.",
-      category: "Research",
-      tags: ["AI", "Search", "Algorithms"],
-      date: "2 days ago",
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [projectId, setProjectId] = useState("");
+  const currentAccount = useCurrentAccount();
+
+  const { data: projectsData, isLoading: projectsLoading } = useQuery({
+    queryKey: ["projects", currentAccount?.address],
+    queryFn: async () => {
+      const response = await fetch("/api/get-projects", {
+        headers: {
+          "x-wallet-address": currentAccount?.address || "",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch projects");
+      }
+
+      return response.json();
     },
-    {
-      title: "Blockchain Storage Notes",
-      content: "Walrus blockchain provides decentralized storage with cryptographic verification. Key benefits: permanence, security, redundancy.",
-      category: "Research",
-      tags: ["Blockchain", "Storage"],
-      date: "5 days ago",
+    enabled: !!currentAccount?.address,
+  });
+
+  const createNoteMutation = useMutation({
+    mutationFn: async (noteData: {
+      title: string;
+      content: string;
+      project_id: string;
+    }) => {
+      const response = await fetch("/api/create-note", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-wallet-address": currentAccount?.address || "",
+        },
+        body: JSON.stringify(noteData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create note");
+      }
+
+      return response.json();
     },
-    {
-      title: "Citation Format Reference",
-      content: "APA format: Author, A. (Year). Title. Journal, Volume(Issue), Pages. DOI: 10.xxxx/xxxx",
-      category: "References",
-      tags: ["Citations", "APA"],
-      date: "1 week ago",
+    onSuccess: () => {
+      setTitle("");
+      setContent("");
+      setProjectId("");
     },
-    {
-      title: "Todo: Review Papers",
-      content: "Review the following papers: 1) AI Research Methodology, 2) Semantic Search Analysis, 3) Blockchain Applications",
-      category: "Todo",
-      tags: ["Todo", "Review"],
-      date: "2 weeks ago",
-    },
-  ];
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    createNoteMutation.mutate({
+      title,
+      content,
+      project_id: projectId,
+    });
+  };
+
+  const handleClear = () => {
+    setTitle("");
+    setContent("");
+    setProjectId("");
+  };
 
   return (
     <motion.div
@@ -50,7 +88,7 @@ export default function Notes() {
         </div>
         <div className="h-1 w-16 bg-black mb-6" />
 
-        <div className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="font-mono text-sm font-bold uppercase tracking-wider text-black mb-3 block">
               Note Title
@@ -58,8 +96,12 @@ export default function Notes() {
             <div className="border-2 border-black bg-white p-4">
               <input
                 type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
                 placeholder="Enter note title..."
                 className="w-full font-mono text-base text-black placeholder-black/40 bg-transparent border-none outline-none"
+                required
+                disabled={createNoteMutation.isPending}
               />
             </div>
           </div>
@@ -71,134 +113,68 @@ export default function Notes() {
             <div className="border-2 border-black bg-white p-4">
               <textarea
                 rows={10}
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
                 placeholder="Write your note here..."
                 className="w-full font-mono text-base text-black placeholder-black/40 bg-transparent border-none outline-none resize-none"
+                required
+                disabled={createNoteMutation.isPending}
               />
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6">
             <div>
               <label className="font-mono text-sm font-bold uppercase tracking-wider text-black mb-3 block">
-                Category
+                Project
               </label>
-              <select className="w-full border-2 border-black bg-white p-4 font-mono text-base text-black">
-                <option>General</option>
-                <option>Research</option>
-                <option>Ideas</option>
-                <option>References</option>
-                <option>Todo</option>
+              <select
+                value={projectId}
+                onChange={(e) => setProjectId(e.target.value)}
+                className="w-full border-2 border-black bg-white p-4 font-mono text-base text-black"
+                required
+                disabled={createNoteMutation.isPending || projectsLoading}
+              >
+                <option value="">Select a project...</option>
+                {projectsData?.projects?.map((project: any) => (
+                  <option key={project.id} value={project.id}>
+                    {project.title}
+                  </option>
+                ))}
               </select>
-            </div>
-            <div>
-              <label className="font-mono text-sm font-bold uppercase tracking-wider text-black mb-3 block">
-                Tags
-              </label>
-              <div className="border-2 border-black bg-white p-4">
-                <input
-                  type="text"
-                  placeholder="Add tags (comma separated)..."
-                  className="w-full font-mono text-base text-black placeholder-black/40 bg-transparent border-none outline-none"
-                />
-              </div>
             </div>
           </div>
 
+          {createNoteMutation.isError && (
+            <p className="font-mono text-xs text-red-600">
+              Failed to create note. Please try again.
+            </p>
+          )}
+
+          {createNoteMutation.isSuccess && (
+            <p className="font-mono text-xs text-green-600">
+              Note created successfully!
+            </p>
+          )}
+
           <div className="flex gap-4">
-            <button className="flex-1 border-2 border-black bg-black text-white font-mono text-sm font-bold uppercase tracking-wider py-4 hover:bg-white hover:text-black transition-all">
-              Save Note
+            <button
+              type="submit"
+              className="flex-1 border-2 border-black bg-black text-white font-mono text-sm font-bold uppercase tracking-wider py-4 hover:bg-white hover:text-black transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={createNoteMutation.isPending}
+            >
+              {createNoteMutation.isPending ? "Saving..." : "Save Note"}
             </button>
-            <button className="px-8 py-4 border-2 border-black bg-white text-black font-mono text-sm font-bold uppercase tracking-wider hover:bg-black hover:text-white transition-all">
+            <button
+              type="button"
+              onClick={handleClear}
+              className="px-8 py-4 border-2 border-black bg-white text-black font-mono text-sm font-bold uppercase tracking-wider hover:bg-black hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={createNoteMutation.isPending}
+            >
               Clear
             </button>
           </div>
-        </div>
-      </div>
-
-      {/* Notes List */}
-      <div className="border-2 border-black bg-white p-8">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="font-mono text-lg font-bold uppercase tracking-wider text-black">
-            My Notes
-          </h3>
-          <div className="flex items-center gap-4">
-            <select className="border-2 border-black bg-white px-4 py-2 font-mono text-xs font-bold text-black">
-              <option>All</option>
-              <option>General</option>
-              <option>Research</option>
-              <option>Ideas</option>
-            </select>
-            <div className="w-4 h-4 border-2 border-black bg-black" />
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          {notesData.map((note, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              className="border-2 border-black bg-white p-6 hover:bg-black hover:text-white transition-all cursor-pointer group"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 border-2 border-black bg-black group-hover:bg-white flex items-center justify-center">
-                    <span className="font-mono text-sm font-black text-white group-hover:text-black">
-                      {String(idx + 1).padStart(2, "0")}
-                    </span>
-                  </div>
-                  <div>
-                    <h4 className="font-mono text-lg font-bold uppercase tracking-wider mb-1">
-                      {note.title}
-                    </h4>
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs text-black/60 group-hover:text-white/70 px-2 py-1 border border-black/20 group-hover:border-white/20">
-                        {note.category}
-                      </span>
-                      <span className="font-mono text-xs text-black/50 group-hover:text-white/60">
-                        {note.date}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex gap-1">
-                  <div className="w-2 h-2 border border-black bg-black group-hover:bg-white" />
-                  <div className="w-2 h-2 border border-black bg-white group-hover:bg-black" />
-                </div>
-              </div>
-
-              <div className="h-1 w-12 bg-black group-hover:bg-white mb-4" />
-
-              <p className="font-mono text-sm leading-relaxed mb-4 text-black/80 group-hover:text-white/90 line-clamp-2">
-                {note.content}
-              </p>
-
-              <div className="flex flex-wrap gap-2">
-                {note.tags.map((tag, tagIdx) => (
-                  <span
-                    key={tagIdx}
-                    className="px-2 py-1 border border-black bg-white group-hover:bg-black group-hover:border-white font-mono text-[10px] text-black group-hover:text-white"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex gap-3 mt-4 pt-4 border-t-2 border-black">
-                <button className="font-mono text-xs font-bold uppercase tracking-wider text-black/60 group-hover:text-white/80 hover:underline">
-                  Edit
-                </button>
-                <button className="font-mono text-xs font-bold uppercase tracking-wider text-black/60 group-hover:text-white/80 hover:underline">
-                  Delete
-                </button>
-                <button className="font-mono text-xs font-bold uppercase tracking-wider text-black/60 group-hover:text-white/80 hover:underline">
-                  Share
-                </button>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        </form>
       </div>
     </motion.div>
   );

@@ -45,3 +45,17 @@ export const projectSchema = yup.object({
     .min(2, "Project name must be at least 2 characters")
     .max(100, "Project name must not exceed 100 characters"),
 });
+
+export const noteSchema = yup.object({
+  title: yup
+    .string()
+    .required("Note title is required")
+    .min(2, "Title must be at least 2 characters")
+    .max(200, "Title must not exceed 200 characters"),
+  content: yup
+    .string()
+    .required("Note content is required")
+    .min(1, "Content is required")
+    .max(10000, "Content must not exceed 10000 characters"),
+  project_id: yup.string().required("Project is required"),
+});
