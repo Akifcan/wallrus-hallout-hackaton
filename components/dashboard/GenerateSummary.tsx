@@ -1,8 +1,43 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import instance from "@/lib/api";
+import { toast } from "sonner";
 
 export default function GenerateSummary() {
+  const [content, setContent] = useState("");
+  const [summaryLength, setSummaryLength] = useState("short");
+  const [language, setLanguage] = useState("English");
+
+  const summarizeMutation = useMutation({
+    mutationFn: async (data: {
+      content: string;
+      summaryLength: string;
+      language: string;
+    }) => {
+      const response = await instance.post("/api/summary", data);
+      return response.data;
+    },
+    onSuccess: () => {
+      toast.success("Summary generated successfully!");
+    },
+    onError: (e) => {
+      console.log(e)
+      toast.error("Failed to generate summary. Please try again.");
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    summarizeMutation.mutate({
+      content,
+      summaryLength,
+      language,
+    });
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -18,18 +53,28 @@ export default function GenerateSummary() {
         </div>
         <div className="h-1 w-16 bg-black mb-6" />
 
-        <div className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="font-mono text-sm font-bold uppercase tracking-wider text-black mb-3 block">
-              Input Text or URL
+              Input Text
             </label>
             <div className="border-2 border-black bg-white p-4">
               <textarea
                 rows={8}
-                placeholder="Paste your text here or enter a URL..."
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="Paste your text here..."
                 className="w-full font-mono text-base text-black placeholder-black/40 bg-transparent border-none outline-none resize-none"
+                required
+                minLength={10}
+                disabled={summarizeMutation.isPending}
               />
             </div>
+            {content.length > 0 && content.length < 10 && (
+              <p className="font-mono text-xs text-red-600 mt-2">
+                Text must be at least 10 characters long ({content.length}/10)
+              </p>
+            )}
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -37,59 +82,126 @@ export default function GenerateSummary() {
               <label className="font-mono text-sm font-bold uppercase tracking-wider text-black mb-3 block">
                 Summary Length
               </label>
-              <select className="w-full border-2 border-black bg-white p-4 font-mono text-base text-black">
-                <option>Short (1-2 sentences)</option>
-                <option>Medium (1 paragraph)</option>
-                <option>Long (2-3 paragraphs)</option>
+              <select
+                value={summaryLength}
+                onChange={(e) => setSummaryLength(e.target.value)}
+                className="w-full border-2 border-black bg-white p-4 font-mono text-base text-black"
+                disabled={summarizeMutation.isPending}
+              >
+                <option value="short">Short</option>
+                <option value="medium">Medium</option>
+                <option value="long">Long</option>
               </select>
             </div>
             <div>
               <label className="font-mono text-sm font-bold uppercase tracking-wider text-black mb-3 block">
                 Language
               </label>
-              <select className="w-full border-2 border-black bg-white p-4 font-mono text-base text-black">
+              <select
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                className="w-full border-2 border-black bg-white p-4 font-mono text-base text-black"
+                disabled={summarizeMutation.isPending}
+              >
                 <option>English</option>
                 <option>Turkish</option>
                 <option>Spanish</option>
                 <option>French</option>
+                <option>German</option>
               </select>
             </div>
           </div>
 
-          <button className="w-full border-2 border-black bg-black text-white font-mono text-sm font-bold uppercase tracking-wider py-4 hover:bg-white hover:text-black transition-all">
-            Generate Summary →
+          {summarizeMutation.isError && (
+            <p className="font-mono text-xs text-red-600">
+              Failed to generate summary. Please try again.
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="w-full border-2 border-black bg-black text-white font-mono text-sm font-bold uppercase tracking-wider py-4 hover:bg-white hover:text-black transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={summarizeMutation.isPending}
+          >
+            {summarizeMutation.isPending
+              ? "Generating Summary..."
+              : "Generate Summary →"}
           </button>
-        </div>
+        </form>
       </div>
 
-      {/* Recent Summaries */}
-      <div className="border-2 border-black bg-white p-8">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="font-mono text-lg font-bold uppercase tracking-wider text-black">
-            Recent Summaries
-          </h3>
-          <div className="w-4 h-4 border-2 border-black bg-black" />
-        </div>
-        <div className="space-y-4">
-          {[1, 2, 3].map((idx) => (
-            <div
-              key={idx}
-              className="border-2 border-black bg-white p-4 hover:bg-black hover:text-white transition-all"
-            >
-              <div className="font-mono text-sm font-bold mb-2">
-                Summary #{idx}
-              </div>
-              <p className="font-mono text-xs text-black/70 line-clamp-2">
-                This is a sample summary text that demonstrates the summary
-                generation feature...
-              </p>
-              <div className="mt-2 font-mono text-[10px] text-black/50">
-                2 days ago
+      {/* Summary Result */}
+      {summarizeMutation.isSuccess && summarizeMutation.data?.summary && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="border-2 border-black bg-white p-8"
+        >
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="font-mono text-lg font-bold uppercase tracking-wider text-black">
+              Generated Summary
+            </h3>
+            <div className="w-4 h-4 border-2 border-black bg-black" />
+          </div>
+          <div className="h-1 w-16 bg-black mb-6" />
+
+          <div className="border-2 border-black bg-white p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-black" />
+                <span className="font-mono text-xs font-bold uppercase tracking-wider text-black">
+                  {language} • {summaryLength}
+                </span>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
+
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-black mb-3">
+                  Original Text:
+                </h4>
+                <div className="border border-black bg-white p-4 max-h-40 overflow-y-auto">
+                  <p className="font-mono text-xs text-black/80 whitespace-pre-wrap">
+                    {content}
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-black mb-3">
+                  Summary:
+                </h4>
+                <div className="border-2 border-black bg-white p-4">
+                  <p className="font-mono text-sm text-black whitespace-pre-wrap">
+                    {summarizeMutation.data.summary}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-4 mt-6">
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(summarizeMutation.data.summary);
+                  toast.success("Summary copied to clipboard!");
+                }}
+                className="flex-1 border-2 border-black bg-white text-black font-mono text-xs font-bold uppercase tracking-wider py-3 hover:bg-black hover:text-white transition-all"
+              >
+                Copy Summary
+              </button>
+              <button
+                onClick={() => {
+                  summarizeMutation.reset();
+                  setContent("");
+                }}
+                className="px-6 py-3 border-2 border-black bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-black hover:text-white transition-all"
+              >
+                New Summary
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      )}
     </motion.div>
   );
 }
