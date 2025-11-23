@@ -2,22 +2,22 @@ import supabase from "@/lib/db";
 import { NextResponse } from "next/server";
 import axios from "axios";
 
-async function getSummaries(projectId: number) {
-  const summaries = await supabase
-    .from("summary")
+async function getFileResearch(projectId: number) {
+  const fileResearch = await supabase
+    .from("file_research")
     .select("*")
     .eq("project_id", projectId);
 
-  if (!summaries.data || summaries.data.length === 0) {
+  if (!fileResearch.data || fileResearch.data.length === 0) {
     return [];
   }
 
-  // Fetch content from Walrus for each summary
-  const summariesWithContent = await Promise.all(
-    summaries.data.map(async (summary) => {
+  // Fetch content from Walrus for each file research
+  const fileResearchWithContent = await Promise.all(
+    fileResearch.data.map(async (file) => {
       try {
         const response = await axios.get(
-          `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${summary.blob_id}`,
+          `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${file.blob_id}`,
           {
             responseType: "arraybuffer",
           }
@@ -28,13 +28,13 @@ async function getSummaries(projectId: number) {
         const content = JSON.parse(jsonString);
 
         return {
-          ...summary,
+          ...file,
           content,
         };
       } catch (error) {
-        console.error(`Error fetching blob ${summary.blob_id}:`, error);
+        console.error(`Error fetching blob ${file.blob_id}:`, error);
         return {
-          ...summary,
+          ...file,
           content: null,
           error: "Failed to fetch content",
         };
@@ -42,7 +42,7 @@ async function getSummaries(projectId: number) {
     })
   );
 
-  return summariesWithContent;
+  return fileResearchWithContent;
 }
 
 export async function GET(
@@ -61,9 +61,9 @@ export async function GET(
     return NextResponse.json({ error: "Project not found" }, { status: 404 });
   }
 
-  const summaries = await getSummaries(project.data.id);
+  const fileResearch = await getFileResearch(project.data.id);
 
   return NextResponse.json({
-    summaries,
+    fileResearch,
   });
 }

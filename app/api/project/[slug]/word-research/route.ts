@@ -17,17 +17,19 @@ async function getWordResearch(projectId: number) {
     wordResearch.data.map(async (research) => {
       try {
         const response = await axios.get(
-          `https://aggregator.walrus-testnet.walrus.space/v1/${research.blob_id}`,
+          `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${research.blob_id}`,
           {
-            headers: {
-              Accept: "application/json",
-            },
+            responseType: "arraybuffer",
           }
         );
 
+        // Convert buffer to string and parse JSON
+        const jsonString = Buffer.from(response.data).toString("utf-8");
+        const content = JSON.parse(jsonString);
+
         return {
           ...research,
-          content: response.data,
+          content,
         };
       } catch (error) {
         console.error(`Error fetching blob ${research.blob_id}:`, error);

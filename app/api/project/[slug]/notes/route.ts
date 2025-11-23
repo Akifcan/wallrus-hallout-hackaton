@@ -17,17 +17,19 @@ async function getNotes(projectId: number) {
     notes.data.map(async (note) => {
       try {
         const response = await axios.get(
-          `https://aggregator.walrus-testnet.walrus.space/v1/${note.blob_id}`,
+          `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${note.blob_id}`,
           {
-            headers: {
-              Accept: "application/json",
-            },
+            responseType: "arraybuffer",
           }
         );
 
+        // Convert buffer to string and parse JSON
+        const jsonString = Buffer.from(response.data).toString("utf-8");
+        const content = JSON.parse(jsonString);
+
         return {
           ...note,
-          content: response.data,
+          content,
         };
       } catch (error) {
         console.error(`Error fetching blob ${note.blob_id}:`, error);
