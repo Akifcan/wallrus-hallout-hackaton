@@ -74,3 +74,8 @@ export const saveWordResearchSchema = yup.object({
   project_id: yup.string().required("Project is required"),
   results: yup.object().required("Results are required"),
 });
+
+export const saveSummarySchema = yup.object({
+  summary_id: yup.string().required("Summary ID is required"),
+  project_id: yup.string().required("Project is required"),
+});
