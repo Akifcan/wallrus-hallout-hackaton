@@ -82,7 +82,8 @@ export default function WordResearchResults({
             results.map((result: WordResearchResult, idx: number) => (
               <div
                 key={idx}
-                className="border-2 border-black bg-white p-4 hover:bg-black hover:text-white transition-all group"
+                className="border-2 border-black bg-white p-4 hover:bg-black hover:text-white transition-all"
+                style={{wordBreak: 'break-all'}}
               >
                 <a
                   href={result.link}
