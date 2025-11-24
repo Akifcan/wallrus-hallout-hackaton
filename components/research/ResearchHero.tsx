@@ -9,6 +9,7 @@ import { newspaperVertexShader, newspaperFragmentShader } from "./shaders";
 import { useQuery } from "@tanstack/react-query";
 import instance from "@/lib/api";
 import Link from "next/link";
+import Image from "next/image";
 
 interface NewspaperPlaneProps {
   position?: [number, number, number];
@@ -190,11 +191,25 @@ export default function ResearchHero() {
           {/* Left Column - Main Content */}
           <div className="space-y-8">
             {/* Badge */}
-            <div className="inline-flex items-center gap-3 border-2 border-black bg-white px-4 py-2">
-              <div className="w-3 h-3 bg-black" />
-              <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-black">
-                RESEARCH PLATFORM
-              </span>
+            <div className="flex items-center gap-3 flex-wrap">
+              <div className="inline-flex items-center gap-3 border-2 border-black bg-white px-4 py-2">
+                <div className="w-3 h-3 bg-black" />
+                <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-black">
+                  RESEARCH PLATFORM
+                </span>
+              </div>
+              <div className="inline-flex items-center gap-2 border-2 border-black bg-black px-3 py-2">
+                <Image
+                  src="/4_icon_token_RGB.png"
+                  alt="Walrus"
+                  width={16}
+                  height={16}
+                  className="object-contain"
+                />
+                <span className="font-mono text-xs font-bold uppercase tracking-wider text-white">
+                  Powered by Walrus
+                </span>
+              </div>
             </div>
 
             {/* Main Headline - Split Layout */}
@@ -326,10 +341,37 @@ export default function ResearchHero() {
               </div>
             )}
 
-            {/* Decorative Elements */}
-            <div className="mt-6 flex gap-4">
-              <div className="w-16 h-16 border-2 border-black bg-white rotate-[-4deg]" />
-              <div className="w-16 h-16 border-2 border-black bg-black rotate-[4deg]" />
+            {/* Walrus Storage Badge */}
+            <div className="mt-6 border-2 border-black bg-black p-4">
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <Image
+                    src="/4_icon_token_RGB.png"
+                    alt="Walrus"
+                    width={32}
+                    height={32}
+                    className="object-contain"
+                  />
+                  <div>
+                    <p className="font-mono text-[10px] text-white/60 uppercase tracking-wider">
+                      Stored on
+                    </p>
+                    <Image
+                      src="/1_primary_logo_monochrome_RGB.png"
+                      alt="Walrus"
+                      width={80}
+                      height={24}
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                  <span className="font-mono text-[10px] text-white/70 uppercase tracking-wider">
+                    Decentralized
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

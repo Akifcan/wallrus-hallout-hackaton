@@ -109,50 +109,42 @@ export default function PublicationDetail() {
                 </div>
               </div>
 
-              <div className="p-6 space-y-4">
-                <h1 className="font-mono text-2xl md:text-3xl font-bold uppercase tracking-wider text-black">
+              <div className="p-4 space-y-3">
+                <h1 className="font-mono text-xl md:text-2xl font-bold uppercase tracking-wider text-black">
                   {publication.title}
                 </h1>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="border-2 border-black p-4">
-                    <div className="font-mono text-xs uppercase tracking-wider text-black/60 mb-1">
-                      Author
-                    </div>
-                    <div className="font-mono text-sm font-bold text-black">
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs text-black/50">Author:</span>
+                    <span className="font-mono text-xs font-bold text-black">
                       {publication.contact_name || "Anonymous"}
-                    </div>
+                    </span>
                   </div>
 
                   {publication.contact_email && (
-                    <div className="border-2 border-black p-4">
-                      <div className="font-mono text-xs uppercase tracking-wider text-black/60 mb-1">
-                        Email
-                      </div>
-                      <div className="font-mono text-sm font-bold text-black">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-xs text-black/50">Email:</span>
+                      <span className="font-mono text-xs font-bold text-black">
                         {publication.contact_email}
-                      </div>
+                      </span>
                     </div>
                   )}
 
                   {publication.contact_number && (
-                    <div className="border-2 border-black p-4">
-                      <div className="font-mono text-xs uppercase tracking-wider text-black/60 mb-1">
-                        Phone
-                      </div>
-                      <div className="font-mono text-sm font-bold text-black">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-xs text-black/50">Phone:</span>
+                      <span className="font-mono text-xs font-bold text-black">
                         {publication.contact_number}
-                      </div>
+                      </span>
                     </div>
                   )}
 
-                  <div className="border-2 border-black p-4">
-                    <div className="font-mono text-xs uppercase tracking-wider text-black/60 mb-1">
-                      Wallet
-                    </div>
-                    <div className="font-mono text-xs text-black truncate">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs text-black/50">Wallet:</span>
+                    <span className="font-mono text-xs text-black truncate max-w-[150px]">
                       {publication.wallet}
-                    </div>
+                    </span>
                   </div>
                 </div>
               </div>
