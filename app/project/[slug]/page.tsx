@@ -10,6 +10,7 @@ import ProjectWordResearch from "@/components/project/ProjectWordResearch";
 import ProjectPublicToggle from "@/components/project/ProjectPublicToggle";
 import EditResearchMetaDialog from "@/components/publishments/EditResearchMetaDialog";
 import WalrusBadge from "@/components/common/WalrusBadge";
+import ShareLink from "@/components/project/ShareLink";
 
 export default function Project() {
   const params = useParams();
@@ -58,6 +59,14 @@ export default function Project() {
 
           {projectData?.project && <ProjectPublicToggle defaultStatus={projectData?.project?.is_public === 'true' ? true : false} />}
         </div>
+
+        {/* Share Link - Only shows when public */}
+        {projectData?.project && (
+          <ShareLink
+            slug={slug}
+            isPublic={projectData?.project?.is_public === 'true' || projectData?.project?.is_public === true}
+          />
+        )}
 
         <WalrusBadge />
 
