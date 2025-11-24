@@ -3,8 +3,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import instance from "@/lib/api";
-import { useParams } from "next/navigation";
 import Image from "next/image";
 
 const mimeTypes: Record<string, string> = {
@@ -204,16 +202,18 @@ function FilePreviewModal({ file, onClose }: FilePreviewModalProps) {
   );
 }
 
-export default function ProjectUploadFiles() {
-  const params = useParams();
-  const slug = params.slug as string;
+interface PublicUploadFilesProps {
+  slug: string;
+}
+
+export default function PublicUploadFiles({ slug }: PublicUploadFilesProps) {
   const [selectedFile, setSelectedFile] = useState<any | null>(null);
 
   const { data: filesData } = useQuery({
-    queryKey: ["uploadFiles", slug],
+    queryKey: ["publicUploadFiles", slug],
     queryFn: async () => {
-      const response = await instance.get(`/api/project/${slug}/upload-files`);
-      return response.data;
+      const response = await fetch(`/api/publications/${slug}/upload-files`);
+      return response.json();
     },
   });
 
@@ -252,12 +252,12 @@ export default function ProjectUploadFiles() {
     return (
       <div className="space-y-4">
         <h2 className="font-mono text-2xl font-bold uppercase tracking-wider border-b-4 border-black pb-2">
-          📁 UPLOADED FILES
+          📁 RESEARCH FILES
         </h2>
         <div className="border-4 border-black bg-white p-12 text-center">
           <div className="text-6xl mb-4">📭</div>
           <p className="font-mono text-lg font-bold uppercase tracking-wider text-black">
-            No Uploaded Files Found
+            No Files Available
           </p>
         </div>
       </div>
@@ -268,7 +268,7 @@ export default function ProjectUploadFiles() {
     <>
       <div className="space-y-4">
         <h2 className="font-mono text-2xl font-bold uppercase tracking-wider border-b-4 border-black pb-2">
-          📁 UPLOADED FILES
+          📁 RESEARCH FILES
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {files.map((file: any) => (

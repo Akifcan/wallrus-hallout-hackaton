@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import PublicSummaries from "@/components/publishments/PublicSummaries";
 import PublicNotes from "@/components/publishments/PublicNotes";
 import PublicWordResearch from "@/components/publishments/PublicWordResearch";
+import PublicUploadFiles from "@/components/publishments/PublicUploadFiles";
 
 interface Publication {
   title: string;
@@ -159,6 +160,7 @@ export default function PublicationDetail() {
 
             {/* Research Content */}
             <div className="border-4 border-black bg-white p-6 space-y-8">
+              <PublicUploadFiles slug={slug} />
               <PublicSummaries slug={slug} />
               <PublicNotes slug={slug} />
               <PublicWordResearch slug={slug} />
