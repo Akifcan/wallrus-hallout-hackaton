@@ -209,7 +209,9 @@ export default function ResearchHeader() {
                 </div>
               </Link>
 
-              <Connect />
+              <div className="w-full">
+                <Connect />
+              </div>
 
               <Link
                 href="/dashboard?demo-account=true"

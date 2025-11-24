@@ -238,9 +238,11 @@ export default function ResearchHero() {
             </div>
 
             <div className="flex flex-wrap gap-4 pt-4">
-              <button className="px-10 py-5 bg-black text-white font-mono text-sm font-bold uppercase tracking-wider border-2 border-black hover:bg-white hover:text-black transition-all duration-200">
-                Start Research
-              </button>
+              <Link href={'/login'}>
+                <button className="px-10 py-5 bg-black text-white font-mono text-sm font-bold uppercase tracking-wider border-2 border-black hover:bg-white hover:text-black transition-all duration-200">
+                  Start Research
+                </button>
+              </Link>
               <Link
                 href="/dashboard?demo-account=true"
                 className="px-10 py-5 bg-white text-black font-mono text-sm font-bold uppercase tracking-wider border-2 border-black hover:bg-black hover:text-white transition-all duration-200"

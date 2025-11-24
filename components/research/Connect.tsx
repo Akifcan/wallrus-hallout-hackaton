@@ -136,7 +136,7 @@ export default function Connect() {
   return (
     <motion.button
       onClick={() => router.push("/login")}
-      className="hidden md:block relative px-10 py-4 bg-black text-white font-mono text-sm font-bold uppercase tracking-wider border-2 border-black group overflow-hidden"
+      className="relative px-10 py-4 bg-black text-white font-mono text-sm font-bold uppercase tracking-wider border-2 border-black group overflow-hidden w-full"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
