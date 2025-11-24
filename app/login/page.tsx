@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useConnectWallet, useCurrentAccount, useWallets } from "@mysten/dapp-kit";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Image from "next/image";
 
 export default function LoginPage() {
   const { mutate: connect } = useConnectWallet();
@@ -84,12 +85,36 @@ export default function LoginPage() {
 
         </div>
 
-        {/* Footer */}
-        <div className="flex items-center gap-4">
-          <div className="w-4 h-4 border-2 border-white bg-white" />
-          <span className="font-mono text-xs text-white/60 uppercase tracking-wider">
-            Powered By Walrus • Decentralized
-          </span>
+        {/* Walrus Branding */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="h-px w-12 bg-white/40" />
+            <span className="font-mono text-xs text-white/60 uppercase tracking-[0.2em]">
+              Powered By
+            </span>
+          </div>
+          <div className="flex items-center gap-4">
+            <Image
+              src="/1_primary_logo_monochrome_RGB.png"
+              alt="Walrus"
+              width={140}
+              height={40}
+              className="object-contain"
+            />
+            <div className="h-8 w-px bg-white/30" />
+            <div className="flex items-center gap-2">
+              <Image
+                src="/4_icon_token_RGB.png"
+                alt="Walrus Token"
+                width={32}
+                height={32}
+                className="object-contain"
+              />
+              <span className="font-mono text-sm text-white/80 uppercase tracking-wider">
+                Decentralized Storage
+              </span>
+            </div>
+          </div>
         </div>
       </motion.div>
 

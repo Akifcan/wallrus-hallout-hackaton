@@ -8,6 +8,7 @@ import FoldersProjects from "@/components/dashboard/FoldersProjects";
 import Notes from "@/components/dashboard/Notes";
 import LastCreatedProjects from "@/components/dashboard/LastCreatedProjects";
 import DashboardLayout from "@/components/layouts/dashboard-layout";
+import WalrusBadge from "@/components/common/WalrusBadge";
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("folders");
@@ -36,6 +37,8 @@ export default function DashboardPage() {
           </button>
         ))}
       </div>
+
+        <WalrusBadge />
 
       {/* Recent Projects */}
       <div className="mb-8 border-2 border-black bg-white">

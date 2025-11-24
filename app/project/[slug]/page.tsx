@@ -9,6 +9,7 @@ import ProjectNotes from "@/components/project/ProjectNotes";
 import ProjectWordResearch from "@/components/project/ProjectWordResearch";
 import ProjectPublicToggle from "@/components/project/ProjectPublicToggle";
 import EditResearchMetaDialog from "@/components/publishments/EditResearchMetaDialog";
+import WalrusBadge from "@/components/common/WalrusBadge";
 
 export default function Project() {
   const params = useParams();
@@ -58,9 +59,13 @@ export default function Project() {
           {projectData?.project && <ProjectPublicToggle defaultStatus={projectData?.project?.is_public === 'true' ? true : false} />}
         </div>
 
+        <WalrusBadge />
+
         <ProjectSummaries />
         <ProjectNotes />
         <ProjectWordResearch />
+
+        <WalrusBadge />
 
         <EditResearchMetaDialog
           isOpen={isDialogOpen}
