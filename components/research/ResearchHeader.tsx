@@ -82,7 +82,7 @@ export default function ResearchHeader() {
                 />
               </motion.div>
               : <motion.a
-                href={`#features`}
+                href={`/#features`}
                 className="relative group"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -188,7 +188,7 @@ export default function ResearchHeader() {
                   Home
                 </Link>
               </motion.div> : <motion.a
-                href={`#features`}
+                href={`/#features`}
                 className="flex items-center gap-4 font-mono text-base font-bold uppercase tracking-wider text-black border-b-2 border-black/20 pb-4"
                 onClick={() => setMenuOpen(false)}
                 initial={{ x: -20, opacity: 0 }}
