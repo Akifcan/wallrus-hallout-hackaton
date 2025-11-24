@@ -28,7 +28,7 @@ export default function ResearchFooter() {
                   DOCSCOUT
                 </div>
                 <div className="font-mono text-xs text-white/60 uppercase tracking-wider">
-                  Research Bureau
+                  Research Storage
                 </div>
               </div>
             </div>
