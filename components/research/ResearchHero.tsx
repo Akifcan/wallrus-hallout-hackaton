@@ -145,7 +145,7 @@ function BackgroundGrid() {
 }
 
 export default function ResearchHero() {
-  const { data: publicationsData } = useQuery({
+  const { data: publicationsData, isLoading, isError } = useQuery({
     queryKey: ["latest-publication"],
     queryFn: async () => {
       const response = await instance.get("/api/publications");
@@ -252,7 +252,48 @@ export default function ResearchHero() {
 
           {/* Right Column - Research Paper Preview */}
           <div className="lg:sticky lg:top-32">
-            {latestPublication ? (
+            {isLoading && (
+              <div className="border-2 border-black bg-white p-8 space-y-6">
+                <div className="flex items-center justify-between border-b-2 border-black pb-4">
+                  <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-black">
+                    Recent Discovery
+                  </h3>
+                  <div className="w-4 h-4 border-2 border-black bg-black" />
+                </div>
+                <div className="text-center py-12">
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="relative w-16 h-16">
+                      <motion.div
+                        className="absolute inset-0 border-4 border-black border-t-transparent"
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      />
+                    </div>
+                    <p className="font-mono text-sm font-bold uppercase tracking-wider text-black">
+                      Loading Publications
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {!isLoading && isError && (
+              <div className="border-2 border-black bg-white p-8 space-y-6">
+                <div className="flex items-center justify-between border-b-2 border-black pb-4">
+                  <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-black">
+                    Recent Discovery
+                  </h3>
+                  <div className="w-4 h-4 border-2 border-black bg-black" />
+                </div>
+                <div className="text-center py-8">
+                  <p className="font-mono text-sm text-black/60">
+                    Failed to load publications.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {!isLoading && !isError && latestPublication && (
               <div className="border-2 border-black bg-white p-8 space-y-6">
                 {/* Header */}
                 <div className="flex items-center justify-between border-b-2 border-black pb-4">
@@ -325,7 +366,9 @@ export default function ResearchHero() {
                   </div>
                 </div>
               </div>
-            ) : (
+            )}
+
+            {!isLoading && !isError && !latestPublication && (
               <div className="border-2 border-black bg-white p-8 space-y-6">
                 <div className="flex items-center justify-between border-b-2 border-black pb-4">
                   <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-black">
