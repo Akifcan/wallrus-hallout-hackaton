@@ -20,13 +20,12 @@ export async function POST(request: Request) {
       );
     }
 
-    const { url, project_id } = validatedData;
+    const { url, project_id, mime_name } = validatedData;
 
     const file = await axios.get(url, {
       responseType: "arraybuffer",
     });
-    const contentType =
-      file.headers["content-type"] || "application/octet-stream";
+    const contentType = "application/octet-stream";
 
     const blobId = await upload(file.data, contentType);
     if (!blobId) {
@@ -41,6 +40,7 @@ export async function POST(request: Request) {
           wallet,
           blob_id: blobId,
           project_id,
+          mime_type: mime_name,
         },
       ])
       .select();

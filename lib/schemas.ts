@@ -22,6 +22,7 @@ export const fileSearchSchema = yup.object({
 export const uploadSchema = yup.object({
   url: yup.string().required("URL is required").url("URL must be a valid URL"),
   project_id: yup.string().required("Project is required"),
+  mime_name: yup.string().required("File type is required"),
 });
 
 export const summarySchema = yup.object({

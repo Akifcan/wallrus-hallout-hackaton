@@ -10,8 +10,12 @@ interface FileResearchResultsProps {
   results: FileSearchResult[];
 }
 
+const getFileExtension = (url: string) => {
+  return url.split(".").pop()?.toLowerCase() || "";
+};
+
 const getFileIcon = (url: string) => {
-  const extension = url.split(".").pop()?.toLowerCase();
+  const extension = getFileExtension(url);
 
   const iconMap: Record<string, string> = {
     pdf: "📄",
@@ -73,11 +77,12 @@ export default function FileResearchResults({
   });
 
   const saveMutation = useMutation({
-    mutationFn: async (data: { url: string; projectId: string }) => {
+    mutationFn: async (data: { url: string; projectId: string; mimeName: string }) => {
       // Then save to database (you might need to create this endpoint)
       const saveResponse = await instance.post("/api/upload-file/save", {
         project_id: data.projectId,
         url: data.url,
+        mime_name: data.mimeName,
       });
 
       return saveResponse.data;
@@ -106,9 +111,12 @@ export default function FileResearchResults({
 
     if (!selectedFile) return;
 
+    const mimeName = getFileExtension(selectedFile.link) || "unknown";
+
     saveMutation.mutate({
       url: selectedFile.link,
       projectId,
+      mimeName,
     });
   };
 
