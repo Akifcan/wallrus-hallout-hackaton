@@ -241,6 +241,12 @@ export default function ResearchHero() {
               <button className="px-10 py-5 bg-black text-white font-mono text-sm font-bold uppercase tracking-wider border-2 border-black hover:bg-white hover:text-black transition-all duration-200">
                 Start Research
               </button>
+              <Link
+                href="/dashboard?demo-account=true"
+                className="px-10 py-5 bg-white text-black font-mono text-sm font-bold uppercase tracking-wider border-2 border-black hover:bg-black hover:text-white transition-all duration-200"
+              >
+                Login with Demo Account
+              </Link>
             </div>
           </div>
 
