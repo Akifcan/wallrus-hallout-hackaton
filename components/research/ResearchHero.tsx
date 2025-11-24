@@ -224,7 +224,7 @@ export default function ResearchHero() {
 
             {/* Description */}
             <div className="max-w-lg space-y-6">
-              <p className="font-mono text-base text-black/80 leading-relaxed">
+              <p className="font-mono text-base text-black/80 leading-relaxed font-bold">
                 Your AI-powered research companion that aggregates scattered information from across the web.
                 Discover PDFs, papers, and documents using intelligent search techniques, then summarize
                 and refine them with artificial intelligence—all in one powerful platform.
