@@ -29,6 +29,7 @@ async function getWordResearch(projectId: number) {
         const content = JSON.parse(jsonString);
 
         return {
+          ...research,
           content: content.results,
         };
       } catch (error) {

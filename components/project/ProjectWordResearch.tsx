@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import instance from "@/lib/api";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 
 
 export default function ProjectWordResearch() {
@@ -54,22 +55,41 @@ export default function ProjectWordResearch() {
             className="border-4 border-black bg-white p-6"
           >
             <div className="space-y-3">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between flex-wrap gap-2">
                 <span className="font-mono text-sm font-bold text-black/60">
                   {research.content?.count} SOURCES FOUND
                 </span>
-                <button
-                  onClick={() =>
-                    setSelectedWordResearch(
-                      selectedWordResearch === index ? null : index
-                    )
-                  }
-                  className="font-mono text-xs font-bold uppercase tracking-wider border-2 border-black bg-black text-white px-4 py-2 hover:bg-white hover:text-black transition-colors"
-                >
-                  {selectedWordResearch === index
-                    ? "HIDE SOURCES"
-                    : "VIEW ALL SOURCES"}
-                </button>
+                <div className="flex items-center gap-2">
+                  {research.blob_id && (
+                    <a
+                      href={`https://walruscan.com/testnet/blob/${research.blob_id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-xs font-bold uppercase tracking-wider border-2 border-black bg-white text-black px-4 py-2 hover:bg-black hover:text-white transition-colors flex items-center gap-2"
+                    >
+                      <Image
+                        src="/4_icon_token_RGB.png"
+                        alt="Walrus"
+                        width={16}
+                        height={16}
+                        className="object-contain"
+                      />
+                      Walrus Scan →
+                    </a>
+                  )}
+                  <button
+                    onClick={() =>
+                      setSelectedWordResearch(
+                        selectedWordResearch === index ? null : index
+                      )
+                    }
+                    className="font-mono text-xs font-bold uppercase tracking-wider border-2 border-black bg-black text-white px-4 py-2 hover:bg-white hover:text-black transition-colors"
+                  >
+                    {selectedWordResearch === index
+                      ? "HIDE SOURCES"
+                      : "VIEW ALL SOURCES"}
+                  </button>
+                </div>
               </div>
 
               {/* Preview - First Result */}

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import instance from "@/lib/api";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 
 export default function ProjectSummaries() {
   const params = useParams();
@@ -67,10 +68,27 @@ export default function ProjectSummaries() {
               >
                 {expandedSummary === summary.id ? "COLLAPSE" : "VIEW"}
               </button>
-              <div className="flex items-center gap-4 pt-2 border-t-2 border-black/10">
+              <div className="flex items-center justify-between gap-4 pt-2 border-t-2 border-black/10">
                 <span className="font-mono text-xs text-black/60">
                   {new Date(summary.created_at).toLocaleDateString()}
                 </span>
+                {summary.blob_id && (
+                  <a
+                    href={`https://walruscan.com/testnet/blob/${summary.blob_id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-mono text-xs font-bold uppercase tracking-wider text-black/60 hover:text-black flex items-center gap-2"
+                  >
+                    <Image
+                      src="/4_icon_token_RGB.png"
+                      alt="Walrus"
+                      width={16}
+                      height={16}
+                      className="object-contain"
+                    />
+                    View on Walrus Scan →
+                  </a>
+                )}
               </div>
             </div>
           </motion.div>
