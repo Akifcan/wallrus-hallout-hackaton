@@ -22,8 +22,6 @@ export default function ResearchHeader() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navItems = ["Features"];
-
   return (
     <motion.header
       initial={{ y: -100 }}
@@ -114,15 +112,15 @@ export default function ResearchHeader() {
               </motion.a>}
 
 
-              <Link href={'/publishments'}>
-                  
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 border-2 border-black bg-white group-hover:bg-black transition-colors" />
-                    <span className="font-mono text-sm font-bold uppercase tracking-[0.15em] text-black">
-                      Publishments
-                    </span>
-                  </div>
-                  </Link>
+            <Link href={'/publishments'}>
+
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 border-2 border-black bg-white group-hover:bg-black transition-colors" />
+                <span className="font-mono text-sm font-bold uppercase tracking-[0.15em] text-black">
+                  Publishments
+                </span>
+              </div>
+            </Link>
 
           </nav>
 
@@ -139,7 +137,10 @@ export default function ResearchHeader() {
                 className="object-contain"
               />
             </div>
-            <Connect />
+            <div className="hidden md:block">
+
+              <Connect />
+            </div>
 
             {/* Mobile Menu */}
             <button
@@ -173,7 +174,7 @@ export default function ResearchHeader() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="xl:hidden bg-[#f5f5f3] border-t-2 border-black overflow-hidden"
+            className="xl:hidden bg-[#f5f5f3] border-t-2 border-black overflow-hidden min-h-[350px]"
           >
             <nav className="px-8 py-8 flex flex-col gap-6">
               {currentAccount ? <motion.div
@@ -198,6 +199,24 @@ export default function ResearchHeader() {
                 Features
               </motion.a>}
 
+              <Link href={'/publishments'}>
+
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 border-2 border-black bg-white group-hover:bg-black transition-colors" />
+                  <span className="font-mono text-sm font-bold uppercase tracking-[0.15em] text-black">
+                    Publishments
+                  </span>
+                </div>
+              </Link>
+
+              <Connect />
+
+              <Link
+                href="/dashboard?demo-account=true"
+                className="px-10 py-5 bg-white text-black font-mono text-sm font-bold uppercase tracking-wider border-2 border-black hover:bg-black hover:text-white transition-all duration-200"
+              >
+                Login with Demo Account
+              </Link>
             </nav>
           </motion.div>
         )}

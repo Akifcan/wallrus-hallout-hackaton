@@ -40,10 +40,10 @@ export default function Connect() {
 
   if (currentAccount) {
     return (
-      <div ref={dropdownRef} className="relative hidden md:block">
+      <div ref={dropdownRef} className="relative">
         <motion.button
           onClick={() => setDropdownOpen(!dropdownOpen)}
-          className="flex items-center gap-3 px-6 py-3 bg-white border-2 border-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200"
+          className="flex items-center gap-3 px-6 py-3 bg-white border-2 border-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 w-full"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
